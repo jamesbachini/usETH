@@ -93,6 +93,7 @@
       const provider = new ethers.providers.Web3Provider(window.ethereum,'any');
       let signer;
       let userAddress;
+      let usEth;
       const usEthAbi = [
         "function balanceOf(address) view returns (uint256)",
         "function staked(address) view returns (uint256)",
@@ -102,20 +103,20 @@
         "function unstake(uint256 amount)",
       ];
       const usEthAddress = '0x7B089d4807CbdaA345851094cb5EfF8F5fb5670f';
-      const usEth = new ethers.Contract(usEthAddress, usEthAbi, provider);
-
+     
       const updateBalances = async () => {
         const ethBalance = await provider.getBalance(userAddress);
-        document.getElementById('eth-balance').innerHTML = ethBalance;
+        document.getElementById('eth-balance').innerHTML = ethers.utils.formatEther(ethBalance);
         const usEthBalance = await usEth.balanceOf(userAddress);
-        document.getElementById('useth-balance').innerHTML = usEthBalance;
+        document.getElementById('useth-balance').innerHTML = ethers.utils.formatEther(usEthBalance);
         const stakedBalance = await usEth.staked(userAddress);
-        document.getElementById('staked-balance').innerHTML = stakedBalance;     
+        document.getElementById('staked-balance').innerHTML = ethers.utils.formatEther(stakedBalance);     
       }
 
       document.getElementById('connect').onclick = async () => {
         await provider.send("eth_requestAccounts", []);
         signer = provider.getSigner()
+        usEth = new ethers.Contract(usEthAddress, usEthAbi, signer);
         userAddress = await signer.getAddress();
         document.querySelectorAll('.wallet-address').forEach(el => el.innerHTML = `${userAddress.substr(0,8)}...`);
         document.getElementById('connect').innerHTML = 'CONNECTED';
