@@ -84,7 +84,7 @@ describe('usEth', function () {
 
   it('Stake usETH', async function () {
     const usEthBalance = await usEth.balanceOf(owner.address);
-    await usEth.approve(usEth.address,ethers.utils.parseEther('1'));
+    //await usEth.approve(usEth.address,ethers.utils.parseEther('1'));
     await usEth.stake(ethers.utils.parseEther('1'));
     const usEthBalance2 = await usEth.balanceOf(owner.address);
     expect(usEthBalance2).to.be.lt(usEthBalance);
