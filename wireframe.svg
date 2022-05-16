@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="1080"
+   height="1920"
+   viewBox="0 0 285.75 508.00002"
+   version="1.1"
+   id="svg914"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
+   sodipodi:docname="wireframe.svg">
+  <defs
+     id="defs908" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.98994949"
+     inkscape:cx="639.33983"
+     inkscape:cy="614.30824"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     inkscape:document-rotation="0"
+     showgrid="false"
+     units="px"
+     inkscape:showpageshadow="false"
+     inkscape:window-width="3840"
+     inkscape:window-height="2066"
+     inkscape:window-x="2869"
+     inkscape:window-y="-11"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata911">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <text
+       xml:space="preserve"
+       style="font-weight:bold;font-size:12.7px;line-height:1.65;font-family:Nunito;-inkscape-font-specification:'Nunito, Bold';opacity:1;fill:#000000;fill-rule:evenodd;stroke:none;stroke-width:4.831;stroke-linecap:square;paint-order:markers stroke fill"
+       x="18.455984"
+       y="21.921272"
+       id="text832"><tspan
+         sodipodi:role="line"
+         id="tspan830"
+         x="18.455984"
+         y="21.921272"
+         style="fill:#000000;stroke:none;stroke-width:4.831">usETH</tspan></text>
+    <rect
+       style="opacity:1;fill:#0000ff;fill-rule:evenodd;stroke:none;stroke-width:4.831;stroke-linecap:square;paint-order:markers stroke fill"
+       id="rect852"
+       width="78.844505"
+       height="14.699824"
+       x="33.94323"
+       y="84.724442"
+       ry="6.6817384" />
+    <text
+       xml:space="preserve"
+       style="font-weight:bold;font-size:12.7px;line-height:1.65;font-family:Nunito;-inkscape-font-specification:'Nunito, Bold';opacity:1;fill:#ffffff;fill-rule:evenodd;stroke:none;stroke-width:4.831;stroke-linecap:square;paint-order:markers stroke fill"
+       x="51.388546"
+       y="95.436798"
+       id="text832-5"><tspan
+         sodipodi:role="line"
+         id="tspan830-4"
+         x="51.388546"
+         y="95.436798"
+         style="fill:#ffffff;stroke:none;stroke-width:4.831">deposit</tspan></text>
+    <rect
+       style="opacity:1;fill:#ffffff;fill-rule:evenodd;stroke:#666666;stroke-width:1.031;stroke-linecap:square;paint-order:markers stroke fill;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect854"
+       width="84.189896"
+       height="13.898018"
+       x="33.408688"
+       y="64.679222"
+       ry="0" />
+    <text
+       xml:space="preserve"
+       style="font-weight:bold;font-size:8.40749px;line-height:1.65;font-family:Nunito;-inkscape-font-specification:'Nunito, Bold';opacity:1;fill:#b3b3b3;fill-rule:evenodd;stroke:none;stroke-width:3.19816;stroke-linecap:square;paint-order:markers stroke fill"
+       x="99.827866"
+       y="76.999367"
+       id="text858"><tspan
+         sodipodi:role="line"
+         id="tspan856"
+         x="99.827866"
+         y="76.999367"
+         style="fill:#b3b3b3;stroke:none;stroke-width:3.19816">ETH</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-weight:bold;font-size:12.7px;line-height:1.65;font-family:Nunito;-inkscape-font-specification:'Nunito, Bold';opacity:1;fill:#000000;fill-rule:evenodd;stroke:none;stroke-width:4.831;stroke-linecap:square;paint-order:markers stroke fill"
+       x="87.455673"
+       y="76.579445"
+       id="text858-9"><tspan
+         sodipodi:role="line"
+         id="tspan856-5"
+         x="87.455673"
+         y="76.579445"
+         style="fill:#000000;stroke:none;stroke-width:4.831">1</tspan></text>
+    <rect
+       style="opacity:1;fill:#0000ff;fill-rule:evenodd;stroke:none;stroke-width:4.831;stroke-linecap:square;paint-order:markers stroke fill"
+       id="rect852-4"
+       width="78.844505"
+       height="14.699824"
+       x="196.57674"
+       y="6.5481033"
+       ry="6.6817384" />
+    <text
+       xml:space="preserve"
+       style="font-weight:bold;font-size:12.7px;line-height:1.65;font-family:Nunito;-inkscape-font-specification:'Nunito, Bold';opacity:1;fill:#ffffff;fill-rule:evenodd;stroke:none;stroke-width:4.831;stroke-linecap:square;paint-order:markers stroke fill"
+       x="214.02205"
+       y="17.26046"
+       id="text832-5-4"><tspan
+         sodipodi:role="line"
+         id="tspan830-4-5"
+         x="214.02205"
+         y="17.26046"
+         style="fill:#ffffff;stroke:none;stroke-width:4.831">connect</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-weight:bold;font-size:7.05556px;line-height:1.65;font-family:Nunito;-inkscape-font-specification:'Nunito, Bold';opacity:1;fill:#b3b3b3;fill-rule:evenodd;stroke:none;stroke-width:4.831;stroke-linecap:square;paint-order:markers stroke fill"
+       x="164.96382"
+       y="15.695722"
+       id="text858-6"><tspan
+         sodipodi:role="line"
+         id="tspan856-6"
+         x="164.96382"
+         y="15.695722"
+         style="font-size:7.05556px;fill:#b3b3b3;stroke:none;stroke-width:4.831">0x234...</tspan></text>
+    <rect
+       style="opacity:1;fill:#0000ff;fill-rule:evenodd;stroke:none;stroke-width:4.831;stroke-linecap:square;paint-order:markers stroke fill"
+       id="rect852-0"
+       width="78.844505"
+       height="14.699824"
+       x="168.61551"
+       y="84.328575"
+       ry="6.6817384" />
+    <text
+       xml:space="preserve"
+       style="font-weight:bold;font-size:12.7px;line-height:1.65;font-family:Nunito;-inkscape-font-specification:'Nunito, Bold';opacity:1;fill:#ffffff;fill-rule:evenodd;stroke:none;stroke-width:4.831;stroke-linecap:square;paint-order:markers stroke fill"
+       x="181.78455"
+       y="95.57547"
+       id="text832-5-0"><tspan
+         sodipodi:role="line"
+         id="tspan830-4-3"
+         x="181.78455"
+         y="95.57547"
+         style="fill:#ffffff;stroke:none;stroke-width:4.831">withdraw</tspan></text>
+    <rect
+       style="opacity:1;fill:#ffffff;fill-rule:evenodd;stroke:#666666;stroke-width:1.031;stroke-linecap:square;paint-order:markers stroke fill;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect854-3"
+       width="84.189896"
+       height="13.898018"
+       x="168.08095"
+       y="64.283356"
+       ry="0" />
+    <text
+       xml:space="preserve"
+       style="font-weight:bold;font-size:8.40749px;line-height:1.65;font-family:Nunito;-inkscape-font-specification:'Nunito, Bold';opacity:1;fill:#b3b3b3;fill-rule:evenodd;stroke:none;stroke-width:3.19816;stroke-linecap:square;paint-order:markers stroke fill"
+       x="226.39969"
+       y="75.668228"
+       id="text858-61"><tspan
+         sodipodi:role="line"
+         id="tspan856-7"
+         x="226.39969"
+         y="75.668228"
+         style="fill:#b3b3b3;stroke:none;stroke-width:3.19816">usETH</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-weight:bold;font-size:12.7px;line-height:1.65;font-family:Nunito;-inkscape-font-specification:'Nunito, Bold';opacity:1;fill:#000000;fill-rule:evenodd;stroke:none;stroke-width:4.831;stroke-linecap:square;paint-order:markers stroke fill"
+       x="155.8465"
+       y="149.68269"
+       id="text858-9-1"><tspan
+         sodipodi:role="line"
+         id="tspan856-5-7"
+         x="155.8465"
+         y="149.68269"
+         style="fill:#000000;stroke:none;stroke-width:4.831">1843</tspan></text>
+    <rect
+       style="opacity:1;fill:none;fill-rule:evenodd;stroke:#1a1a1a;stroke-width:1.25405;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none;paint-order:markers stroke fill"
+       id="rect953"
+       width="247.75885"
+       height="56.150005"
+       x="19.510675"
+       y="117.57519" />
+    <rect
+       style="opacity:1;fill:none;fill-rule:evenodd;stroke:#1a1a1a;stroke-width:1.031;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none;paint-order:markers stroke fill"
+       id="rect955"
+       width="248.02612"
+       height="0.53453904"
+       x="19.510675"
+       y="154.47102" />
+    <text
+       xml:space="preserve"
+       style="font-weight:bold;font-size:8.40748px;line-height:1.65;font-family:Nunito;-inkscape-font-specification:'Nunito, Bold';opacity:1;fill:#000000;fill-rule:evenodd;stroke:none;stroke-width:3.19815;stroke-linecap:square;paint-order:markers stroke fill"
+       x="26.864824"
+       y="147.81111"
+       id="text858-61-1"><tspan
+         sodipodi:role="line"
+         id="tspan856-7-1"
+         x="26.864824"
+         y="147.81111"
+         style="fill:#000000;stroke:none;stroke-width:3.19815">usETH</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-weight:bold;font-size:8.40748px;line-height:1.65;font-family:Nunito;-inkscape-font-specification:'Nunito, Bold';opacity:1;fill:#000000;fill-rule:evenodd;stroke:none;stroke-width:3.19815;stroke-linecap:square;paint-order:markers stroke fill"
+       x="26.643391"
+       y="166.51997"
+       id="text858-61-1-0"><tspan
+         sodipodi:role="line"
+         id="tspan856-7-1-0"
+         x="26.643391"
+         y="166.51997"
+         style="fill:#000000;stroke:none;stroke-width:3.19815">Staked usETH Balance</tspan></text>
+    <rect
+       style="opacity:1;fill:#000000;fill-rule:evenodd;stroke:#1a1a1a;stroke-width:1.031;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none;paint-order:markers stroke fill"
+       id="rect993"
+       width="0.53453904"
+       height="38.754082"
+       x="138.71288"
+       y="135.23837" />
+    <rect
+       style="opacity:1;fill:#000000;fill-rule:evenodd;stroke:#1a1a1a;stroke-width:1.031;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none;paint-order:markers stroke fill"
+       id="rect993-6"
+       width="0.53453904"
+       height="38.754082"
+       x="204.99573"
+       y="135.10474" />
+    <text
+       xml:space="preserve"
+       style="font-weight:bold;font-size:12.7px;line-height:1.65;font-family:Nunito;-inkscape-font-specification:'Nunito, Bold';opacity:1;fill:#000000;fill-rule:evenodd;stroke:none;stroke-width:4.831;stroke-linecap:square;paint-order:markers stroke fill"
+       x="191.44261"
+       y="75.303177"
+       id="text858-9-1-6"><tspan
+         sodipodi:role="line"
+         id="tspan856-5-7-8"
+         x="191.44261"
+         y="75.303177"
+         style="fill:#000000;stroke:none;stroke-width:4.831">2000</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-weight:bold;font-size:12.7px;line-height:1.65;font-family:Nunito;-inkscape-font-specification:'Nunito, Bold';opacity:1;fill:#000000;fill-rule:evenodd;stroke:none;stroke-width:4.831;stroke-linecap:square;paint-order:markers stroke fill"
+       x="165.4856"
+       y="168.31931"
+       id="text858-9-1-1"><tspan
+         sodipodi:role="line"
+         id="tspan856-5-7-2"
+         x="165.4856"
+         y="168.31931"
+         style="fill:#000000;stroke:none;stroke-width:4.831">0</tspan></text>
+    <rect
+       style="opacity:1;fill:none;fill-rule:evenodd;stroke:#1a1a1a;stroke-width:1.031;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none;paint-order:markers stroke fill"
+       id="rect955-5"
+       width="248.02612"
+       height="0.53453904"
+       x="20.312483"
+       y="133.90204" />
+    <text
+       xml:space="preserve"
+       style="font-weight:bold;font-size:7.05556px;line-height:1.65;font-family:Nunito;-inkscape-font-specification:'Nunito, Bold';opacity:1;fill:#000000;fill-rule:evenodd;stroke:none;stroke-width:1.031;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none;paint-order:markers stroke fill"
+       x="25.657873"
+       y="129.09119"
+       id="text1081"><tspan
+         sodipodi:role="line"
+         id="tspan1079"
+         x="25.657873"
+         y="129.09119"
+         style="stroke:none;stroke-width:1.031">Asset</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-weight:bold;font-size:7.05556px;line-height:1.65;font-family:Nunito;-inkscape-font-specification:'Nunito, Bold';opacity:1;fill:#000000;fill-rule:evenodd;stroke:none;stroke-width:1.031;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none;paint-order:markers stroke fill"
+       x="152.79846"
+       y="127.8259"
+       id="text1081-7"><tspan
+         sodipodi:role="line"
+         id="tspan1079-5"
+         x="152.79846"
+         y="127.8259"
+         style="stroke:none;stroke-width:1.031"> Balance</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-weight:bold;font-size:7.05556px;line-height:1.65;font-family:Nunito;-inkscape-font-specification:'Nunito, Bold';opacity:1;fill:#000000;fill-rule:evenodd;stroke:none;stroke-width:1.031;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none;paint-order:markers stroke fill"
+       x="212.47928"
+       y="128.02209"
+       id="text1103"><tspan
+         sodipodi:role="line"
+         id="tspan1101"
+         x="212.47928"
+         y="128.02209"
+         style="stroke-width:1.031">Estimated APR</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-weight:bold;font-size:12.7px;line-height:1.65;font-family:Nunito;-inkscape-font-specification:'Nunito, Bold';opacity:1;fill:#000000;fill-rule:evenodd;stroke:none;stroke-width:4.831;stroke-linecap:square;paint-order:markers stroke fill"
+       x="232.189"
+       y="149.33684"
+       id="text858-9-1-1-3"><tspan
+         sodipodi:role="line"
+         id="tspan856-5-7-2-1"
+         x="232.189"
+         y="149.33684"
+         style="fill:#000000;stroke:none;stroke-width:4.831">0%</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-weight:bold;font-size:12.7px;line-height:1.65;font-family:Nunito;-inkscape-font-specification:'Nunito, Bold';opacity:1;fill:#000000;fill-rule:evenodd;stroke:none;stroke-width:4.831;stroke-linecap:square;paint-order:markers stroke fill"
+       x="225.56636"
+       y="168.31297"
+       id="text858-9-1-1-30"><tspan
+         sodipodi:role="line"
+         id="tspan856-5-7-2-7"
+         x="225.56636"
+         y="168.31297"
+         style="fill:#000000;stroke:none;stroke-width:4.831">8.3%</tspan></text>
+    <rect
+       style="opacity:1;fill:#0000ff;fill-rule:evenodd;stroke:none;stroke-width:4.831;stroke-linecap:square;paint-order:markers stroke fill"
+       id="rect852-5"
+       width="78.844505"
+       height="14.699824"
+       x="32.75631"
+       y="209.46046"
+       ry="6.6817384" />
+    <text
+       xml:space="preserve"
+       style="font-weight:bold;font-size:12.7px;line-height:1.65;font-family:Nunito;-inkscape-font-specification:'Nunito, Bold';opacity:1;fill:#ffffff;fill-rule:evenodd;stroke:none;stroke-width:4.831;stroke-linecap:square;paint-order:markers stroke fill"
+       x="55.814297"
+       y="219.90555"
+       id="text832-5-2"><tspan
+         sodipodi:role="line"
+         id="tspan830-4-1"
+         x="55.814297"
+         y="219.90555"
+         style="fill:#ffffff;stroke:none;stroke-width:4.831">stake</tspan></text>
+    <rect
+       style="opacity:1;fill:#ffffff;fill-rule:evenodd;stroke:#666666;stroke-width:1.031;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none;paint-order:markers stroke fill"
+       id="rect854-2"
+       width="84.189896"
+       height="13.898018"
+       x="32.221779"
+       y="189.41524"
+       ry="0" />
+    <text
+       xml:space="preserve"
+       style="font-weight:bold;font-size:12.7px;line-height:1.65;font-family:Nunito;-inkscape-font-specification:'Nunito, Bold';opacity:1;fill:#000000;fill-rule:evenodd;stroke:none;stroke-width:4.831;stroke-linecap:square;paint-order:markers stroke fill"
+       x="57.404995"
+       y="201.04819"
+       id="text858-9-4"><tspan
+         sodipodi:role="line"
+         id="tspan856-5-8"
+         x="57.404995"
+         y="201.04819"
+         style="fill:#000000;stroke:none;stroke-width:4.831">1843</tspan></text>
+    <rect
+       style="opacity:1;fill:#0000ff;fill-rule:evenodd;stroke:none;stroke-width:4.831;stroke-linecap:square;paint-order:markers stroke fill"
+       id="rect852-0-9"
+       width="78.844505"
+       height="14.699824"
+       x="167.42859"
+       y="209.06461"
+       ry="6.6817384" />
+    <text
+       xml:space="preserve"
+       style="font-weight:bold;font-size:12.7px;line-height:1.65;font-family:Nunito;-inkscape-font-specification:'Nunito, Bold';opacity:1;fill:#ffffff;fill-rule:evenodd;stroke:none;stroke-width:4.831;stroke-linecap:square;paint-order:markers stroke fill"
+       x="184.87393"
+       y="219.77695"
+       id="text832-5-0-7"><tspan
+         sodipodi:role="line"
+         id="tspan830-4-3-4"
+         x="184.87393"
+         y="219.77695"
+         style="fill:#ffffff;stroke:none;stroke-width:4.831">unstake</tspan></text>
+    <rect
+       style="opacity:1;fill:#ffffff;fill-rule:evenodd;stroke:#666666;stroke-width:1.031;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none;paint-order:markers stroke fill"
+       id="rect854-3-6"
+       width="84.189896"
+       height="13.898018"
+       x="166.89401"
+       y="189.01938"
+       ry="0" />
+    <text
+       xml:space="preserve"
+       style="font-weight:bold;font-size:8.40748px;line-height:1.65;font-family:Nunito;-inkscape-font-specification:'Nunito, Bold';opacity:1;fill:#b3b3b3;fill-rule:evenodd;stroke:none;stroke-width:3.19815;stroke-linecap:square;paint-order:markers stroke fill"
+       x="225.21277"
+       y="200.40425"
+       id="text858-61-0"><tspan
+         sodipodi:role="line"
+         id="tspan856-7-8"
+         x="225.21277"
+         y="200.40425"
+         style="fill:#b3b3b3;stroke:none;stroke-width:3.19815">usETH</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-weight:bold;font-size:12.7px;line-height:1.65;font-family:Nunito;-inkscape-font-specification:'Nunito, Bold';opacity:1;fill:#000000;fill-rule:evenodd;stroke:none;stroke-width:4.831;stroke-linecap:square;paint-order:markers stroke fill"
+       x="213.50815"
+       y="199.50465"
+       id="text858-9-1-6-6"><tspan
+         sodipodi:role="line"
+         id="tspan856-5-7-8-8"
+         x="213.50815"
+         y="199.50465"
+         style="fill:#000000;stroke:none;stroke-width:4.831">0</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-weight:bold;font-size:8.40748px;line-height:1.65;font-family:Nunito;-inkscape-font-specification:'Nunito, Bold';opacity:1;fill:#b3b3b3;fill-rule:evenodd;stroke:none;stroke-width:3.19815;stroke-linecap:square;paint-order:markers stroke fill"
+       x="89.405891"
+       y="201.53227"
+       id="text858-61-0-1"><tspan
+         sodipodi:role="line"
+         id="tspan856-7-8-9"
+         x="89.405891"
+         y="201.53227"
+         style="fill:#b3b3b3;stroke:none;stroke-width:3.19815">usETH</tspan></text>
+  </g>
+</svg>
