@@ -3,42 +3,40 @@ Sustainable high yielding stablecoin backed by a delta neutral staked Ethereum p
 
 I know it’s not a great time to be launching a stablecoin but this might be a way to do it sustainably while still offering high yield, so hear me out…
 
-## How A Delta Neutral Basis Trade Works
+## How A Delta Neutral Trade Works
 
-Basis trades have been part of the bread and butter of traditional finance for as long as commodities have traded on futures exchanges. It involves buying an asset and then short selling a futures contract for the same asset. This means that if the asset price goes up or down it doesn’t matter because the position is delta neutral and pegged to the USD.
+Delta neutral trades have no directional exposure. They have been part of the bread and butter of traditional finance for as long as commodities have traded on futures exchanges. It involves buying an asset and then borrowing the same amount of the same asset to short it. The borrowed asset is sold for USD meaning that if the asset price goes up or down it doesn’t matter because the amount owned is the same as the amount borrowed.
 
-The trader collects a funding premium because longs will pay shorts in most markets a funding premium for holding the position.
-
-
-This has been very profitable in crypto markets as well with big players like Alameda heavily involved in basis trading
+This is often set up through a basis trade where longs will pay shorts in most markets a funding premium for holding the position. This has been very profitable in crypto markets as well with big players like Alameda heavily involved in basis trading
 
 ## Enter LIDO’s stETH Staked Ethereum
 
 Ethereum is migrating from a proof of work algorithm to a proof of stake algorithm which means that holders of ETH can earn a return on their staked assets. LIDO finance has taken this a step further and created an stETH token which represents a position in staked Ethereum in the form of an ERC20 token.
 
-This becomes more interesting because Aave accept stETH as collateral on their borrowing and lending platform meaning that we can purchase stETH, use this as collateral to borrow ETH swap this for USDC so we owe as much ETH as we own. Creating a delta neutral position.
+This becomes more interesting because Aave accepts stETH as collateral on their borrowing and lending platform meaning that we can purchase stETH, use this as collateral to borrow ETH swap this for USDC so we owe as much ETH as we own. Creating a delta neutral position.
 
-However there is a significant benefit to doing this which is going to be a game changer for DeFi. An stETH basis trade earns on both the long side and the short side.
+However there is a significant benefit to doing this which is going to be a game changer for DeFi. The stETH that we are using for collateral still earns staking rewards while it is being used to short the same volume of Eth.
 
-The stETH long will earn 3-10% APR in staking rewards and the short will earn 5-10% APR (more in bull markets, less in bear markets) in funding premium. This means that the position even after borrowing costs will earn somewhere between 5-20% APR.
+The stETH long will earn around 10% APR (post merge) in staking rewards while borrowing costs are less than 1% on our overcollateralized position.
 
 ## Can It Be Done In A Smart Contract?
 
-In theory we could create a fully decentralised stablecoin backed by a basis trade running completely on Ethereum smart contracts.
+usETH is an ERC20 token with some additional functionality.
 
-The first smart contract would handle setting up the position which would grow over time because of staking rewards and funding premium. When a user deposits ETH into the vault they’ll be given a btETH to represent their position.
+- The deposit function allows a user to send ETH and mint usETH in return
+- The withdraw function allows a user to redeem usETH in exchange for their ETH
+- The stake function allows a user to commit usETH to the staking pool to earn rewards
+- The unstake function releases the usETH and collects the rewards
 
-For many users this will be attractive in itself because it will provide an attractive return on a position pegged to the USD fully automated and permissionless in a Solidity smart contract.
+With any stablecoin the total supply is not staked at any one time. However with usETH the underlying collateral is always staked meaning that if 50% of users stake their usETH the rewards will be 2x the ETH staking rewards before incentives.
 
-btETH wouldn’t be pegged to the US dollar  however because it would represent an equal share of a growing pool due to the accrual of staking rewards and funding premium.
+For many users this will be attractive in itself because it will provide a sustainable return on a position pegged to the USD fully automated and permissionless in a Solidity smart contract.
 
-The second contract provides a mechanism to mint a stable coin by staking btETH tokens. A user will deposit btETH and in return they’ll be able to mint usETH which will always be valued at $1.
+A usEth DAO governance token ($USED) will incentivise growth and create bribes to bootstrap a liquidity pool on Uniswap for USDC-usETH.
 
-The user will still accrue returns on their staked btETH but they will be able to use usETH much like any other algorithmic stablecoin.
+Incoming staking rewards will be subject to a 2% fee which will be directed to the holders of the USED token creating value for the protocol and its future governance.
 
-A governance token will be used to incentivise growth and bribe initial liquidity providers to create a pool on Uniswap for USDC-usETH.
-
-Protocol will charge a 0.x% fee to carry out transactions which will be redistributed to governance token holders and/or treasury.
+All figures are preliminary and subject to change.
 
 ## Rinkeby Deployments
 

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>usETH | Sustainable high yielding stablecoin backed by a delta neutral staked Ethereum position</title>
+    <link href="https://fonts.googleapis.com/css2?family=Mali:wght@300;400;600&family=Source+Code+Pro&display=swap" rel="stylesheet"> 
+    <style>
+      body { font-family: "Source Code Pro", sans-serif; background: #000; color: #CCC; }
+    </style>
+  </head>
+  <body id="top">
+    <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; width: 100%;">
+      <div style="flex: 1 1 auto; text-align: center; font-size: 1.4em;">usETH</div>
+      <div style="flex: 1 1 auto; text-align: center;">TVL: $0m</div>
+      <div style="flex: 1 1 auto; text-align: center;"><button id="connect">CONNECT</button></div>
+    </div>
+    <div style="text-align: center; padding: 5%;">
+      sustainable high yielding stablecoin backed by a delta neutral staked Ethereum position
+    </div>
+    <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; max-width: 800px; margin: 0px auto;">
+      <div style="flex: 1 1 auto; text-align: center;">
+        <input type="text" placeholder="ETH"  style="text-align: center;" />
+        <button>DEPOSIT</button> 
+      </div>
+      <div style="flex: 1 1 auto; text-align: center;">
+        <input type="text" placeholder="usETH" style="text-align: center;" />
+        <button>WITHDRAW</button>
+      </div>
+    </div>
+    <div style="max-width: 800px; margin: 20px auto; text-align: center;">
+      <table style="width: 100%;">
+        <tr><th>Asset</th><th>Balance</th><th>Estimated APR</th></tr>
+        <tr><td>ETH</td><td>0</td><td>0%</td></tr>
+        <tr><td>usETH</td><td>0</td><td>0%</td></tr>
+        <tr><td>Staked usETH</td><td>0</td><td>12.3%</td></tr>
+      </table>
+    </div>
+    <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; max-width: 800px; margin: 0px auto;">
+      <div style="flex: 1 1 auto; text-align: center;">
+        <input type="text" placeholder="usETH"  style="text-align: center;" />
+        <button>STAKE</button> 
+      </div>
+      <div style="flex: 1 1 auto; text-align: center;">
+        <input type="text" placeholder="usETH" style="text-align: center;" />
+        <button>UNSTAKE</button>
+      </div>
+    </div>
+    <div style="text-align: center;">
+      <div style="padding: 5% 0 1% 0;">built on the lego bricks of DeFi</div>
+      <div style="opacity: 0.5;"><img src="img/lego.svg" alt="Lido Finance, Aave, Uniswap, Chainlink" title="Lido Finance, Aave, Uniswap, Chainlink" /></div>
+    </div>
+    <div style="text-align: center; padding: 5% 0 0 0">
+      <a href="https://twitter.com/useth" target="_blank" style="color: #CCC;">@useth</a> | 
+      <a href="https://github.com/jamesbachini/useth" target="_blank" style="color: #CCC;">Github</a> | 
+      <a href="https://aragon.org/" target="_blank" style="color: #CCC;">DAO</a> | 
+      <a href="https://rinkeby.etherscan.io/address/0x7B089d4807CbdaA345851094cb5EfF8F5fb5670f" target="_blank" style="color: #CCC;">0x7B089d4807CbdaA345851094cb5EfF8F5fb5670f</a>
+    </div>
+    <div style="text-align: center; padding: 1% 0 0 0"><h3>Learn More</h3></div>
+    <div style="max-width: 800px; margin: auto;">
+      <h2 id="how-a-delta-neutral-trade-works">How A Delta Neutral Trade Works</h2>
+      <p>Delta neutral trades have no directional exposure. They have been part of the bread and butter of traditional finance for as long as commodities have traded on futures exchanges. It involves buying an asset and then borrowing the same amount of the same asset to short it. The borrowed asset is sold for USD meaning that if the asset price goes up or down it doesn’t matter because the amount owned is the same as the amount borrowed.</p>
+      <p>This is often set up through a basis trade where longs will pay shorts in most markets a funding premium for holding the position. This has been very profitable in crypto markets as well with big players like Alameda heavily involved in basis trading</p>
+      <h2 id="enter-lido-s-steth-staked-ethereum">Enter LIDO’s stETH Staked Ethereum</h2>
+      <p>Ethereum is migrating from a proof of work algorithm to a proof of stake algorithm which means that holders of ETH can earn a return on their staked assets. LIDO finance has taken this a step further and created an stETH token which represents a position in staked Ethereum in the form of an ERC20 token.</p>
+      <p>This becomes more interesting because Aave accepts stETH as collateral on their borrowing and lending platform meaning that we can purchase stETH, use this as collateral to borrow ETH swap this for USDC so we owe as much ETH as we own. Creating a delta neutral position.</p>
+      <p>However there is a significant benefit to doing this which is going to be a game changer for DeFi. The stETH that we are using for collateral still earns staking rewards while it is being used to short the same volume of Eth.</p>
+      <p>The stETH long will earn around 10% APR (post merge) in staking rewards while borrowing costs are less than 1% on our overcollateralized position.</p>
+      <h2 id="can-it-be-done-in-a-smart-contract-">Can It Be Done In A Smart Contract?</h2>
+      <p>usETH is an ERC20 token with some additional functionality.</p>
+      <ul>
+      <li>The deposit function allows a user to send ETH and mint usETH in return</li>
+      <li>The withdraw function allows a user to redeem usETH in exchange for their ETH</li>
+      <li>The stake function allows a user to commit usETH to the staking pool to earn rewards</li>
+      <li>The unstake function releases the usETH and collects the rewards</li>
+      </ul>
+      <p>With any stablecoin the total supply is not staked at any one time. However with usETH the underlying collateral is always staked meaning that if 50% of users stake their usETH the rewards will be 2x the ETH staking rewards before incentives.</p>
+      <p>For many users this will be attractive in itself because it will provide a sustainable return on a position pegged to the USD fully automated and permissionless in a Solidity smart contract.</p>
+      <p>A usEth DAO governance token ($USED) will incentivise growth and create bribes to bootstrap a liquidity pool on Uniswap for USDC-usETH.</p>
+      <p>Incoming staking rewards will be subject to a 2% fee which will be directed to the holders of the USED token creating value for the protocol and its future governance.</p>
+      <p>All figures are preliminary and subject to change.</p>
+    </div>
+    <div style="text-align: center; margin: 3% auto;">
+      <img src="img/explainer_bw.svg" alt="usETH Explainer" style="max-width: 600px;" />
+    </div>
+    <div style="text-align: center;">
+      <a href="#top" style="color: #CCC;">back to top</a>
+    </div>
+    <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" type="application/javascript"></script>
+    <script>
+
+      const provider = new ethers.providers.Web3Provider(window.ethereum,"any");
+      const connect = async () => {
+        console.log('test');
+        await provider.send("eth_requestAccounts", []);
+      }
+      //const signer = provider.getSigner()
+      
+      document.getElementById('connect').onclick = connect;
+    </script>
+    
+  </body>
+</html>
