@@ -32,7 +32,8 @@ module.exports = {
   networks: {
     rinkeby: {
       url: `https://eth-rinkeby.alchemyapi.io/v2/${process.env.ALCHEMY_API_KEY}`,
-      accounts: [process.env.PRIVATE_KEY,process.env.USER1_PRIVATE_KEY,],
+      //accounts: [process.env.PRIVATE_KEY,process.env.USER1_PRIVATE_KEY,],
+      accounts: [process.env.USER1_PRIVATE_KEY,process.env.PRIVATE_KEY],
     },
     kovan: {
       url: `https://eth-kovan.alchemyapi.io/v2/${process.env.ALCHEMY_API_KEY}`,
@@ -55,5 +56,8 @@ module.exports = {
   },
   etherscan: {
     apiKey: process.env.ETHERSCAN_API_KEY,
+  },
+  mocha: {
+    timeout: 100000000
   },
 };

@@ -1,5 +1,5 @@
-# USBT
-Sustainable stablecoin backed by staked Ethereum basis trade
+# usETH
+Sustainable high yielding stablecoin backed by a delta neutral staked Ethereum position
 
 I know it’s not a great time to be launching a stablecoin but this might be a way to do it sustainably while still offering high yield, so hear me out…
 
@@ -16,7 +16,7 @@ This has been very profitable in crypto markets as well with big players like Al
 
 Ethereum is migrating from a proof of work algorithm to a proof of stake algorithm which means that holders of ETH can earn a return on their staked assets. LIDO finance has taken this a step further and created an stETH token which represents a position in staked Ethereum in the form of an ERC20 token.
 
-This becomes more interesting because Aave accept stETH as collateral on their borrowing and lending platform meaning that we can purchase stETH, use this as collateral to borrow USDC, which can then in turn be used to take a short position on a DeFi futures exchange such as DyDx or Perpetual protocol. A delta neutral basis trade.
+This becomes more interesting because Aave accept stETH as collateral on their borrowing and lending platform meaning that we can purchase stETH, use this as collateral to borrow ETH swap this for USDC so we owe as much ETH as we own. Creating a delta neutral position.
 
 However there is a significant benefit to doing this which is going to be a game changer for DeFi. An stETH basis trade earns on both the long side and the short side.
 
@@ -32,14 +32,30 @@ For many users this will be attractive in itself because it will provide an attr
 
 btETH wouldn’t be pegged to the US dollar  however because it would represent an equal share of a growing pool due to the accrual of staking rewards and funding premium.
 
-The second contract provides a mechanism to mint a stable coin by staking btETH tokens. A user will deposit btETH and in return they’ll be able to mint USBT which will always be valued at $1.
+The second contract provides a mechanism to mint a stable coin by staking btETH tokens. A user will deposit btETH and in return they’ll be able to mint usETH which will always be valued at $1.
 
-The user will still accrue returns on their staked btETH but they will be able to use USBT much like any other algorithmic stablecoin.
+The user will still accrue returns on their staked btETH but they will be able to use usETH much like any other algorithmic stablecoin.
 
-A governance token will be used to incentivise growth and bribe initial liquidity providers to create a pool on Uniswap for USDC-USBT.
+A governance token will be used to incentivise growth and bribe initial liquidity providers to create a pool on Uniswap for USDC-usETH.
 
 Protocol will charge a 0.x% fee to carry out transactions which will be redistributed to governance token holders and/or treasury.
 
+## Rinkeby Deployments
+
+usEth deployed to: 0x7B089d4807CbdaA345851094cb5EfF8F5fb5670f
+^^^ This is the main contract
+
+usEthDao deployed to: 0xBa9f64687A6190dF03FF5C476Fb8Dd34A1dAFa4a
+FakeAave: 0xf0a8B14F0A9Ae12c994872028d3B520D303A8F68
+Owner: 0x1111c595c66A7997485E4f587eA812716b8d165F
+
+## Ethers.js Commands
+const usEth = new ethers.Contract('0x7B089d4807CbdaA345851094cb5EfF8F5fb5670f', './abis/useth.json', ethers.provider);
+const usEthBalance = await usEth.balanceOf(owner.address); // usETH is an ERC20 token, check balance
+await usEth.deposit({value: ethers.utils.parseEther('0.01')}); // just send ETH with transaction, no arguments
+await usEth.stake(ethers.utils.parseEther('1')); // 1 usd, not 1 eth. Still has 18 decimals
+await usEth.unstake(ethers.utils.parseEther('1')); // 1 usd, not 1 eth. Still has 18 decimals
+await usEth.withdraw(ethers.utils.parseEther('1')); // 1 usd, not 1 eth. Still has 18 decimals
 
 ## Build
 

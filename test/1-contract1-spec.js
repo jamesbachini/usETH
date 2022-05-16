@@ -4,10 +4,6 @@ const lidoAbi = require('./../abis/lido.json');
 const aaveAbi = require('./../abis/aave.json');
 const usdcAbi = require('./../abis/usdc.json');
 const wethAbi = require('./../abis/weth.json');
-
-
-
-
     
 // Mainnet
 let lidoAddress = '0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84';
@@ -18,7 +14,6 @@ let usdcAddress = '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48';
 let wethAddress = '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2';
 
 describe('usEth', function () {
-  this.timeout(300000); // 5 mins
   let usEth, usEthDao, lido, aave, weth;
 
   before(async () => {
@@ -34,7 +29,7 @@ describe('usEth', function () {
       chainlinkAddress = '0x8A753747A1Fa494EC906cE90E9f37563A8AF630e';
       usdcAddress = '0xeb8f08a975Ab53E34D8a0330E0D34de942C95926';
       wethAddress = '0xc778417E063141139Fce010982780140Aa0cD5Ab';
-    } else if (networkData.name === 'local') { // Move some funds on local testnet
+    } else if (networkData.chainId === 31337) { // Move some funds on local testnet
       const sponsor = new ethers.Wallet('0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80', ethers.provider);
       await sponsor.sendTransaction({ to: owner.address, value: ethers.utils.parseEther('2') });
     }
