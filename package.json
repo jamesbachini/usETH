@@ -1,0 +1,47 @@
+{
+  "name": "usETH",
+  "version": "1.0.3",
+  "description": "A sustainable high yield stablecoin backed by a delta neutral staked Ethereum position",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.0.6",
+    "@nomiclabs/hardhat-etherscan": "^3.0.3",
+    "@nomiclabs/hardhat-waffle": "^2.0.3",
+    "@openzeppelin/contracts": "^4.6.0",
+    "chai": "^4.3.6",
+    "dotenv": "^16.0.1",
+    "ethereum-waffle": "^3.2.0",
+    "glob": "^7.2.0",
+    "hardhat": "^2.9.5",
+    "hardhat-gas-reporter": "^1.0.8",
+    "solidity-coverage": "^0.7.21"
+  },
+  "main": "hardhat test",
+  "scripts": {
+    "test": "hardhat test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jamesbachini/usETH.git"
+  },
+  "keywords": [
+    "Stablecoin",
+    "usETH",
+    "Delta Neutral",
+    "Lido",
+    "Aave",
+    "Weth",
+    "USDC",
+    "Solidity",
+    "Web3",
+    "EthGlobal"
+  ],
+  "author": "James Bachini",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jamesbachini/usETH/issues"
+  },
+  "homepage": "https://github.com/jamesbachini/usETH#readme"
+}
