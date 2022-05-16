@@ -129,6 +129,7 @@
         const tx = await usEth.deposit({ value: weiAmount });
         const receipt = await tx.wait();
         document.getElementById('deposit').innerHTML = 'DEPOSIT';
+        await updateBalances();
       }
 
       document.getElementById('withdraw').onclick = async () => {
@@ -137,6 +138,7 @@
         const tx = await usEth.withdraw(weiAmount);
         const receipt = await tx.wait();
         document.getElementById('withdraw').innerHTML = 'WITHDRAW';
+        await updateBalances();
       }
 
       document.getElementById('stake').onclick = async () => {
@@ -145,6 +147,7 @@
         const tx = await usEth.stake(weiAmount);
         const receipt = await tx.wait();
         document.getElementById('stake').innerHTML = 'STAKE';
+        await updateBalances();
       }
 
       document.getElementById('unstake').onclick = async () => {
@@ -153,6 +156,7 @@
         const tx = await usEth.unstake(weiAmount);
         const receipt = await tx.wait();
         document.getElementById('unstake').innerHTML = 'UNSTAKE';
+        await updateBalances();
       }
     </script>
     
