@@ -113,7 +113,7 @@
         document.getElementById('staked-balance').innerHTML = ethers.utils.formatEther(stakedBalance);     
       }
 
-      document.getElementById('connect').onclick = async () => {
+      const connect = async () => {
         await provider.send("eth_requestAccounts", []);
         signer = provider.getSigner()
         usEth = new ethers.Contract(usEthAddress, usEthAbi, signer);
@@ -122,8 +122,10 @@
         document.getElementById('connect').innerHTML = 'CONNECTED';
         await updateBalances();
       }
+      document.getElementById('connect').onclick = connect;
 
       document.getElementById('deposit').onclick = async () => {
+        if (!usEth) await connect();
         const weiAmount = ethers.utils.parseEther(document.getElementById('deposit-amount').value);
         document.getElementById('deposit').innerHTML = 'SENDING TX...';
         const tx = await usEth.deposit({ value: weiAmount });
@@ -133,6 +135,7 @@
       }
 
       document.getElementById('withdraw').onclick = async () => {
+        if (!usEth) await connect();
         const weiAmount = ethers.utils.parseEther(document.getElementById('withdraw-amount').value);
         document.getElementById('withdraw').innerHTML = 'SENDING TX...';
         const tx = await usEth.withdraw(weiAmount);
@@ -142,6 +145,7 @@
       }
 
       document.getElementById('stake').onclick = async () => {
+        if (!usEth) await connect();
         const weiAmount = ethers.utils.parseEther(document.getElementById('stake-amount').value);
         document.getElementById('stake').innerHTML = 'SENDING TX...';
         const tx = await usEth.stake(weiAmount);
@@ -151,6 +155,7 @@
       }
 
       document.getElementById('unstake').onclick = async () => {
+        if (!usEth) await connect();
         const weiAmount = ethers.utils.parseEther(document.getElementById('unstake-amount').value);
         document.getElementById('unstake').innerHTML = 'SENDING TX...';
         const tx = await usEth.unstake(weiAmount);
