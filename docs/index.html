@@ -38,6 +38,7 @@
             <tr><td>ETH</td><td id="eth-balance"> </td><td></td> <td>0%</td></tr>
             <tr><td>usETH</td><td id="useth-balance"> </td><td> </td><td>0%</td></tr>
             <tr><td>Staked usETH</td><td id="staked-balance"> </td><td id="rewards-balance"> </td><td>12.3%</td></tr>
+            <tr><td>USED Gov Token</td><td id="used-balance"> </td><td id="used-rewards-balance"> </td><td>0%</td></tr>
           </table>
         </div>
         <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; max-width: 800px; margin: 0px auto;">
@@ -104,6 +105,7 @@
       let signer;
       let userAddress;
       let usEth;
+      let used;
       const usEthAbi = [
         "function balanceOf(address) view returns (uint256)",
         "function rewardsOf(address) view returns (uint256)",
@@ -114,22 +116,29 @@
         "function unstake(uint256 amount)",
       ];
       const usEthAddress = '0xEBB9255e86dA226Cf819C68D958Abbb431bEF684';
+      const usedAddress = '0xa359039EA942c7E6CdA54c618F64D1bd5155D331';
       
       const updateBalances = async () => {
         const ethBalance = await provider.getBalance(userAddress);
-        document.getElementById('eth-balance').innerHTML = Number(ethers.utils.formatEther(ethBalance)).toFixed(5);
+        document.getElementById('eth-balance').innerHTML = `$${Number(ethers.utils.formatEther(ethBalance)).toFixed(5)} ETH`;
         const usEthBalance = await usEth.balanceOf(userAddress);
-        document.getElementById('useth-balance').innerHTML = Number(ethers.utils.formatEther(usEthBalance)).toFixed(2);
+        document.getElementById('useth-balance').innerHTML = `$${Number(ethers.utils.formatEther(usEthBalance)).toFixed(2)}`;
         const stakedBalance = await usEth.staked(userAddress);
-        document.getElementById('staked-balance').innerHTML = Number(ethers.utils.formatEther(stakedBalance)).toFixed(2);     
+        document.getElementById('staked-balance').innerHTML = `$${Number(ethers.utils.formatEther(stakedBalance)).toFixed(2)}`;
         const rewardsBalance = await usEth.rewardsOf(userAddress);
-        document.getElementById('rewards-balance').innerHTML = Number(ethers.utils.formatEther(rewardsBalance)).toFixed(2);     
+        document.getElementById('rewards-balance').innerHTML = `$${Number(ethers.utils.formatEther(rewardsBalance)).toFixed(2)}`;
+        const usedBalance = await used.balanceOf(userAddress);
+        document.getElementById('used-balance').innerHTML = `${Number(ethers.utils.formatEther(usedBalance)).toFixed(5)} USED`;
+        document.getElementById('used-rewards-balance').innerHTML = `${Number(ethers.utils.formatEther(rewardsBalance)).toFixed(2)} USED`;
+
+        
       }
 
       const connect = async () => {
         await provider.send("eth_requestAccounts", []);
         signer = provider.getSigner()
         usEth = new ethers.Contract(usEthAddress, usEthAbi, signer);
+        used = new ethers.Contract(usedAddress, usEthAbi, signer);
         userAddress = await signer.getAddress();
         const { chainId } = await provider.getNetwork()
         if (chainId !== 4) alert('Please set your network to Rinkeby Testnet');
