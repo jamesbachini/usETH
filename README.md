@@ -1,9 +1,15 @@
 # usETH
-Sustainable high yielding stablecoin backed by a delta neutral staked Ethereum position
+sustainable stablecoin backed by a high yielding delta neutral staked ethereum position
 
-## Rinkeby Testnet Frontend
+## Frontend
 
 https://jamesbachini.github.io/usETH/
+
+Frontend is currently deployed on the Rinkeby Testnet. To get Rinkeby ETH visit the faucet at https://rinkebyfaucet.com
+
+## Main Contract
+
+https://github.com/jamesbachini/usETH/blob/main/contracts/usETH.sol
 
 ## Rinkeby Deployments
 

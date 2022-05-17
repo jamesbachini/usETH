@@ -1,7 +1,7 @@
 {
   "name": "usETH",
-  "version": "1.0.3",
-  "description": "A sustainable high yield stablecoin backed by a delta neutral staked Ethereum position",
+  "version": "1.0.4",
+  "description": "sustainable stablecoin backed by a high yielding delta neutral staked ethereum position",
   "directories": {
     "test": "test"
   },
