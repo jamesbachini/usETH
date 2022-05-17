@@ -34,10 +34,10 @@
         </div>
         <div style="max-width: 800px; margin: 20px auto; text-align: center;">
           <table style="width: 100%;">
-            <tr><th>Asset</th><th>Balance</th><th>Estimated APR</th></tr>
-            <tr><td>ETH</td><td id="eth-balance">0</td><td>0%</td></tr>
-            <tr><td>usETH</td><td id="useth-balance">0</td><td>0%</td></tr>
-            <tr><td>Staked usETH</td><td id="staked-balance">0</td><td>12.3%</td></tr>
+            <tr><th>Asset</th><th>Balance</th><th>Rewards</th><th>Estimated APR</th></tr>
+            <tr><td>ETH</td><td id="eth-balance"> </td><td></td> <td>0%</td></tr>
+            <tr><td>usETH</td><td id="useth-balance"> </td><td> </td><td>0%</td></tr>
+            <tr><td>Staked usETH</td><td id="staked-balance"> </td><td id="rewards-balance">0</td><td>12.3%</td></tr>
           </table>
         </div>
         <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; max-width: 800px; margin: 0px auto;">
@@ -116,11 +116,13 @@
       
       const updateBalances = async () => {
         const ethBalance = await provider.getBalance(userAddress);
-        document.getElementById('eth-balance').innerHTML = ethers.utils.formatEther(ethBalance);
+        document.getElementById('eth-balance').innerHTML = ethers.utils.formatEther(ethBalance.toFixed(5));
         const usEthBalance = await usEth.balanceOf(userAddress);
-        document.getElementById('useth-balance').innerHTML = ethers.utils.formatEther(usEthBalance);
+        document.getElementById('useth-balance').innerHTML = ethers.utils.formatEther(usEthBalance.toFixed(2));
         const stakedBalance = await usEth.staked(userAddress);
-        document.getElementById('staked-balance').innerHTML = ethers.utils.formatEther(stakedBalance);     
+        document.getElementById('staked-balance').innerHTML = ethers.utils.formatEther(stakedBalance.toFixed(2));     
+        const rewardsBalance = await usEth.rewardsOf(userAddress);
+        document.getElementById('rewards-balance').innerHTML = ethers.utils.formatEther(rewardsBalance.toFixed(2));     
       }
 
       const connect = async () => {

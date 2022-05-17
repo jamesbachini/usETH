@@ -147,7 +147,7 @@ describe('usEth', function () {
     const usEthDaoBalance1 = await usEthDao.balanceOf(owner.address);
     await usEthDao.unstake(usdAmount);
     const usEthDaoBalance2 = await usEthDao.balanceOf(owner.address);
-    expect(usEthDaoBalance2).to.be.gt(usEthDaoBalance1);
+    expect(usEthDaoBalance2).to.be.lt(usEthDaoBalance1);
   });
 
 });
