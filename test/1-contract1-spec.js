@@ -13,6 +13,8 @@ let uniswapAddress = '0xE592427A0AEce92De3Edee1F18E0157C05861564';
 let curveAddress = '0xdc24316b9ae028f1497c275eb9192a3ea0f67022';
 let usdcAddress = '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48';
 let wethAddress = '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2';
+let astethAddress = '0x1982b2F5814301d4e9a8b0201555376e62F82428'; 
+let ausdcAddress = '0xBcca60bB61934080951369a648Fb03DF4F96263C';
 
 describe('usEth', function () {
   let usEth, usEthDao, lido, aave, weth;
@@ -40,7 +42,7 @@ describe('usEth', function () {
     
     // Deploy usEth.sol
     const usEthContract = await ethers.getContractFactory('usEth');
-    usEth = await usEthContract.deploy(lidoAddress,aaveAddress,chainlinkAddress,uniswapAddress,curveAddress,usdcAddress,wethAddress);
+    usEth = await usEthContract.deploy(lidoAddress,aaveAddress,chainlinkAddress,uniswapAddress,curveAddress,usdcAddress,wethAddress,astethAddress,ausdcAddress);
     await usEth.deployed();
     console.log(`    usEth deployed to: ${usEth.address}`);
 
@@ -86,14 +88,22 @@ describe('usEth', function () {
   it('Stake usETH', async function () {
     const usEthBalance = await usEth.balanceOf(owner.address);
     //await usEth.approve(usEth.address,ethers.utils.parseEther('1'));
-    await usEth.stake(ethers.utils.parseEther('1'));
+    await usEth.stake(ethers.utils.parseEther('0.1'));
     const usEthBalance2 = await usEth.balanceOf(owner.address);
     expect(usEthBalance2).to.be.lt(usEthBalance);
   });
 
+  it('Test calculateRewards on usETH', async function () {
+    await usEth.calculateRewards();
+  });
+
+  it('Test rebalance on usETH', async function () {
+    await usEth.rebalance();
+  });
+  
   it('Unstake usETH', async function () {
     const usEthBalance = await usEth.balanceOf(owner.address);
-    await usEth.unstake(ethers.utils.parseEther('1'));
+    await usEth.unstake(ethers.utils.parseEther('0.1'));
      const usEthBalance2 = await usEth.balanceOf(owner.address);
     expect(usEthBalance2).to.be.gt(usEthBalance);
   });
@@ -101,15 +111,12 @@ describe('usEth', function () {
   it('Withdraw usETH', async function () {
     const ethBalance = await ethers.provider.getBalance(owner.address);
     const usEthBalance = await usEth.balanceOf(owner.address);
-    await usEth.withdraw(ethers.utils.parseEther('1'));
+    await usEth.withdraw(ethers.utils.parseEther('0.1'));
     const ethBalance2 = await ethers.provider.getBalance(owner.address);
     const usEthBalance2 = await usEth.balanceOf(owner.address);
     expect(usEthBalance2).to.be.lt(usEthBalance);
     //expect(ethBalance2).to.be.gt(ethBalance); // fails for low amounts due to gas fees
   });
 
-  it('Test distributeRewards on usETH', async function () {
-    await usEth.distributeRewards();
-  });
 
 });
