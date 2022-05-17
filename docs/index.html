@@ -125,6 +125,8 @@
         signer = provider.getSigner()
         usEth = new ethers.Contract(usEthAddress, usEthAbi, signer);
         userAddress = await signer.getAddress();
+        const { chainId } = await provider.getNetwork()
+        if (chainId !== 4) alert('Please set your network to Rinkeby Testnet');
         document.querySelectorAll('.wallet-address').forEach(el => el.innerHTML = `${userAddress.substr(0,8)}...`);
         document.getElementById('connect').innerHTML = 'CONNECTED';
         window.ethereum.on('accountsChanged', () => { connect() });
