@@ -17,39 +17,41 @@
       <div style="flex: 1 1 auto; text-align: center;">TVL: $0m</div>
       <div style="flex: 1 1 auto; text-align: center;"><span style="font-size:0.6em;" class="wallet-address"></span><button id="connect">CONNECT</button></div>
     </div>
-    <div style="text-align: center; padding: 5%;">
+    <div style="text-align: center; padding: 5% 0 2% 0;">
       sustainable high yielding stablecoin backed by a delta neutral staked Ethereum position
     </div>
-    <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; max-width: 800px; margin: 0px auto;">
-      <div style="flex: 1 1 auto; text-align: center;">
-        <input type="text" id="deposit-amount" placeholder="ETH"  style="text-align: center;" />
-        <button id="deposit">DEPOSIT</button> 
+    <div id="app" style="margin: 3% auto; padding: 2% 0; border: 1px solid #444; max-width: 820px;">
+      <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; max-width: 800px; margin: 0px auto;">
+        <div style="flex: 1 1 auto; text-align: center;">
+          <input type="text" id="deposit-amount" placeholder="ETH"  style="text-align: center;" />
+          <button id="deposit">DEPOSIT</button> 
+        </div>
+        <div style="flex: 1 1 auto; text-align: center;">
+          <input type="text" id="withdraw-amount" placeholder="usETH" style="text-align: center;" />
+          <button id="withdraw">WITHDRAW</button>
+        </div>
       </div>
-      <div style="flex: 1 1 auto; text-align: center;">
-        <input type="text" id="withdraw-amount" placeholder="usETH" style="text-align: center;" />
-        <button id="withdraw">WITHDRAW</button>
+      <div style="max-width: 800px; margin: 20px auto; text-align: center;">
+        <table style="width: 100%;">
+          <tr><th>Asset</th><th>Balance</th><th>Estimated APR</th></tr>
+          <tr><td>ETH</td><td id="eth-balance">0</td><td>0%</td></tr>
+          <tr><td>usETH</td><td id="useth-balance">0</td><td>0%</td></tr>
+          <tr><td>Staked usETH</td><td id="staked-balance">0</td><td>12.3%</td></tr>
+        </table>
       </div>
-    </div>
-    <div style="max-width: 800px; margin: 20px auto; text-align: center;">
-      <table style="width: 100%;">
-        <tr><th>Asset</th><th>Balance</th><th>Estimated APR</th></tr>
-        <tr><td>ETH</td><td id="eth-balance">0</td><td>0%</td></tr>
-        <tr><td>usETH</td><td id="useth-balance">0</td><td>0%</td></tr>
-        <tr><td>Staked usETH</td><td id="staked-balance">0</td><td>12.3%</td></tr>
-      </table>
-    </div>
-    <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; max-width: 800px; margin: 0px auto;">
-      <div style="flex: 1 1 auto; text-align: center;">
-        <input type="text" id="stake-amount" placeholder="usETH"  style="text-align: center;" />
-        <button id="stake">STAKE</button> 
-      </div>
-      <div style="flex: 1 1 auto; text-align: center;">
-        <input type="text" id="unstake-amount" placeholder="usETH" style="text-align: center;" />
-        <button id="unstake">UNSTAKE</button>
+      <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; max-width: 800px; margin: 0px auto;">
+        <div style="flex: 1 1 auto; text-align: center;">
+          <input type="text" id="stake-amount" placeholder="usETH"  style="text-align: center;" />
+          <button id="stake">STAKE</button> 
+        </div>
+        <div style="flex: 1 1 auto; text-align: center;">
+          <input type="text" id="unstake-amount" placeholder="usETH" style="text-align: center;" />
+          <button id="unstake">UNSTAKE</button>
+        </div>
       </div>
     </div>
     <div style="text-align: center;">
-      <div style="padding: 5% 0 1% 0;">built on the lego bricks of DeFi</div>
+      <div style="padding: 3% 0 1% 0;">built on the lego bricks of DeFi</div>
       <div style="opacity: 0.5;"><img src="img/lego.svg" style="width: 300px; max-width: 80%;" alt="Lido Finance, Aave, Uniswap, Chainlink" title="Lido Finance, Aave, Uniswap, Chainlink" /></div>
     </div>
     <div style="text-align: center; padding: 5% 0 0 0">
