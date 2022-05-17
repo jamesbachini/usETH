@@ -22,10 +22,10 @@ This is also an ERC20 compatible token with 1B supply. Responsible for collectin
 ## Latest Rinkeby Deployments
 
 > usEthDao deployed to: 0xa359039EA942c7E6CdA54c618F64D1bd5155D331
-https://rinkeby.etherscan.io/address/0xEBB9255e86dA226Cf819C68D958Abbb431bEF684#code
+> https://rinkeby.etherscan.io/address/0xEBB9255e86dA226Cf819C68D958Abbb431bEF684#code
 
 > usEth deployed to: 0xEBB9255e86dA226Cf819C68D958Abbb431bEF684
-https://rinkeby.etherscan.io/address/0xa359039EA942c7E6CdA54c618F64D1bd5155D331#code
+> https://rinkeby.etherscan.io/address/0xa359039EA942c7E6CdA54c618F64D1bd5155D331#code
 
 Mocks:
 curveAddress = '0x2692CB081Ae680110d5b8E549563e74e617b4606';
