@@ -130,6 +130,7 @@
         document.querySelectorAll('.wallet-address').forEach(el => el.innerHTML = `${userAddress.substr(0,8)}...`);
         document.getElementById('connect').innerHTML = 'CONNECTED';
         window.ethereum.on('accountsChanged', () => { connect() });
+        window.ethereum.on('network', () => { connect() });
         await updateBalances();
       }
       document.getElementById('connect').onclick = connect;
