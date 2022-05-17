@@ -12,8 +12,7 @@ WIP
 # Introducing 
 
 # Hi-Res Flow Overview Links
-
-Due to the asset size multiple formats have been provided.
+**Due to the asset size multiple formats have been provided.**
 
 For the best experience please download the hi-res png and view from your computer do not try to view from github.
 
