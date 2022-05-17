@@ -28,6 +28,10 @@ interface EACAggregatorProxy {
   function latestAnswer() external view returns (int256);
 }
 
+interface ICurve {
+  function exchange(int128 i,int128 j,uint256 dx,uint256 min_dy) external;
+}
+
 contract usEth is ERC20 {
   mapping(address => uint256) public staked;
   uint256 public totalStaked = 0;
@@ -35,14 +39,16 @@ contract usEth is ERC20 {
   address public aaveAddress;
   address public chainlinkAddress;
   address public uniswapAddress;
+  address public curveAddress;
   address public usdcAddress;
   address public wethAddress;
 
-  constructor(address _lidoAddress, address _aaveAddress, address _chainlinkAddress, address _uniswapAddress, address _usdcAddress, address _wethAddress) ERC20("USD  Ether", "usETH") {
+  constructor(address _lidoAddress, address _aaveAddress, address _chainlinkAddress, address _uniswapAddress, address _curveAddress, address _usdcAddress, address _wethAddress) ERC20("USD  Ether", "usETH") {
     lidoAddress = _lidoAddress;
     aaveAddress = _aaveAddress;
     chainlinkAddress = _chainlinkAddress;
     uniswapAddress = _uniswapAddress;
+    curveAddress = _curveAddress;
     usdcAddress = _usdcAddress;
     wethAddress = _wethAddress;
   }
@@ -65,16 +71,11 @@ contract usEth is ERC20 {
   }
 
   /*
-  
   1. Convert ETH > stETH
   2. Deposit stETH > Aave
   3. Borrow wETH
   4. Sell wETH for USDC
   5. Deposit USDC > Aave
-
-  1ETH = $2000
-  Collateral 1 stETH & 1950 USDC
-  Borrowed 1 WETH
   */
 
   function deposit() payable public {
@@ -102,12 +103,12 @@ contract usEth is ERC20 {
   }
 
   /*
-    1ETH = $2000
-    Collateral 1 stETH & 1950 USDC
+    Deposit: 1ETH = $2000
+    Collateral 1 stETH & 2000 USDC
     Borrowed 1 WETH
 
     Withdraw $1000
-    Collateral 0.5 stETH & 950USDC
+    Collateral 0.5 stETH & 1000USDC
     Borrowed 0.5ETH
   */
 
@@ -121,19 +122,20 @@ contract usEth is ERC20 {
     int256 ethPriceInt = EACAggregatorProxy(chainlinkAddress).latestAnswer();
     uint256 ethDollarPrice = uint256(ethPriceInt) / 10e7;
     uint256 lidoOut = _amount / ethDollarPrice;
-    // stETH side
-    IAave(aaveAddress).withdraw(lidoAddress,lidoOut,address(this));
-    IERC20(lidoAddress).approve(uniswapAddress,lidoOut);
-    /*
-    Need to swap stETH back to ETH via either LIDO (once available), Curve or Uniswap v2
-    uint256 wethToPayBack = swap(lidoAddress,wethAddress,lidoOut);
-    IAave(aaveAddress).repay(wethAddress,wethToPayBack,2,address(this));
-    */
+
     // USDC side
     IAave(aaveAddress).withdraw(usdcAddress,usdcOut,address(this));
     IERC20(usdcAddress).approve(uniswapAddress,usdcOut);
     uint256 wethBack = swap(usdcAddress,wethAddress,usdcOut);
-    IWEth(wethAddress).withdraw(wethBack);
+    IAave(aaveAddress).repay(wethAddress,wethBack,2,address(this));
+
+    // stETH side
+    IAave(aaveAddress).withdraw(lidoAddress,lidoOut,address(this));
+    IERC20(lidoAddress).approve(uniswapAddress,lidoOut);
+    uint256 minLidoBack = lidoOut / 10 * 9;
+    ILido(lidoAddress).approve(curveAddress,lidoOut);
+    ICurve(curveAddress).exchange(1,0,lidoOut,minLidoBack); // returns ETH
+
     (bool success, ) = msg.sender.call{value: wethBack}("");
     require(success, "ETH transfer on withdrawal failed");
     // checkRebalance();

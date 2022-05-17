@@ -10,6 +10,7 @@ let lidoAddress = '0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84';
 let aaveAddress = '0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9';
 let chainlinkAddress = '0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419';
 let uniswapAddress = '0xE592427A0AEce92De3Edee1F18E0157C05861564';
+let curveAddress = '0xdc24316b9ae028f1497c275eb9192a3ea0f67022';
 let usdcAddress = '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48';
 let wethAddress = '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2';
 
@@ -39,7 +40,7 @@ describe('usEth', function () {
     
     // Deploy usEth.sol
     const usEthContract = await ethers.getContractFactory('usEth');
-    usEth = await usEthContract.deploy(lidoAddress,aaveAddress,chainlinkAddress,uniswapAddress,usdcAddress,wethAddress);
+    usEth = await usEthContract.deploy(lidoAddress,aaveAddress,chainlinkAddress,uniswapAddress,curveAddress,usdcAddress,wethAddress);
     await usEth.deployed();
     console.log(`    usEth deployed to: ${usEth.address}`);
 
