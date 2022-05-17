@@ -76,8 +76,8 @@ contract usEth is ERC20 {
   3. Borrow wETH
   4. Sell wETH for USDC
   5. Deposit USDC > Aave
+  6. Repeat so borrow ETH matches deposited stETH
   */
-
   function deposit() payable public {
     uint256 stEthCollateral = ILido(lidoAddress).submit{value: msg.value}(address(this));
     ILido(lidoAddress).approve(aaveAddress, stEthCollateral);
@@ -111,7 +111,6 @@ contract usEth is ERC20 {
     Collateral 0.5 stETH & 1000USDC
     Borrowed 0.5ETH
   */
-
   function withdraw(uint256 _amount) public {
     uint256 supply = totalSupply();
     uint256 maxWithdrawPerTransaction = supply / 2;
@@ -127,6 +126,7 @@ contract usEth is ERC20 {
     IAave(aaveAddress).withdraw(usdcAddress,usdcOut,address(this));
     IERC20(usdcAddress).approve(uniswapAddress,usdcOut);
     uint256 wethBack = swap(usdcAddress,wethAddress,usdcOut);
+    IWEth(wethAddress).approve(aaveAddress,wethBack);
     IAave(aaveAddress).repay(wethAddress,wethBack,2,address(this));
 
     // stETH side
@@ -134,8 +134,9 @@ contract usEth is ERC20 {
     IERC20(lidoAddress).approve(uniswapAddress,lidoOut);
     uint256 minLidoBack = lidoOut / 10 * 9;
     ILido(lidoAddress).approve(curveAddress,lidoOut);
+    console.log(address(this).balance);
     ICurve(curveAddress).exchange(1,0,lidoOut,minLidoBack); // returns ETH
-
+    if (address(this).balance < wethBack) wethBack = address(this).balance;
     (bool success, ) = msg.sender.call{value: wethBack}("");
     require(success, "ETH transfer on withdrawal failed");
     // checkRebalance();
