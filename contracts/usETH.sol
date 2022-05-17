@@ -184,6 +184,7 @@ contract usEth is ERC20 {
       uint256 diffNormalised = ausdcNormalised - astethNormalised;
       uint qtrDiff = diffNormalised / 10e11 / 4;
       IAave(aaveAddress).withdraw(usdcAddress,qtrDiff,address(this));
+      IERC20(usdcAddress).approve(uniswapAddress,qtrDiff);
       uint256 wethBack = swap(usdcAddress,wethAddress,qtrDiff);
       IWEth(wethAddress).withdraw(wethBack);
       uint256 stEthCollateral = ILido(lidoAddress).submit{value: wethBack}(address(this));
