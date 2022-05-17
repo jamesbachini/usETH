@@ -37,7 +37,7 @@
             <tr><th>Asset</th><th>Balance</th><th>Rewards</th><th>Estimated APR</th></tr>
             <tr><td>ETH</td><td id="eth-balance"> </td><td></td> <td>0%</td></tr>
             <tr><td>usETH</td><td id="useth-balance"> </td><td> </td><td>0%</td></tr>
-            <tr><td>Staked usETH</td><td id="staked-balance"> </td><td id="rewards-balance">0</td><td>12.3%</td></tr>
+            <tr><td>Staked usETH</td><td id="staked-balance"> </td><td id="rewards-balance"> </td><td>12.3%</td></tr>
           </table>
         </div>
         <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; max-width: 800px; margin: 0px auto;">
@@ -53,7 +53,7 @@
       </div>
       <div style="text-align: center;">
         <div style="padding: 3% 0 1% 0;">built on the lego bricks of DeFi</div>
-        <div style="opacity: 0.5;"><img src="img/lego_bw.png" style="width: 300px; max-width: 80%;" alt="Lido Finance, Aave, Uniswap, Chainlink, Curve" title="Lido Finance, Aave, Uniswap, Chainlink, Curve" /></div>
+        <div style="opacity: 0.5;"><img src="img/lego_bw.png" style="width: 300px; max-width: 80%;" alt="Lido, Aave, Uniswap, Chainlink, Curve" title="Lido, Aave, Uniswap, Chainlink, Curve" /></div>
       </div>
       <div style="text-align: center; padding: 5% 0 0 0">
         <a href="https://github.com/jamesbachini/useth" target="_blank" style="color: #CCC;">github</a> | 
@@ -116,13 +116,13 @@
       
       const updateBalances = async () => {
         const ethBalance = await provider.getBalance(userAddress);
-        document.getElementById('eth-balance').innerHTML = ethers.utils.formatEther(ethBalance.toFixed(5));
+        document.getElementById('eth-balance').innerHTML = ethers.utils.formatEther(ethBalance).toFixed(5);
         const usEthBalance = await usEth.balanceOf(userAddress);
-        document.getElementById('useth-balance').innerHTML = ethers.utils.formatEther(usEthBalance.toFixed(2));
+        document.getElementById('useth-balance').innerHTML = ethers.utils.formatEther(usEthBalance).toFixed(2);
         const stakedBalance = await usEth.staked(userAddress);
-        document.getElementById('staked-balance').innerHTML = ethers.utils.formatEther(stakedBalance.toFixed(2));     
+        document.getElementById('staked-balance').innerHTML = ethers.utils.formatEther(stakedBalance).toFixed(2);     
         const rewardsBalance = await usEth.rewardsOf(userAddress);
-        document.getElementById('rewards-balance').innerHTML = ethers.utils.formatEther(rewardsBalance.toFixed(2));     
+        document.getElementById('rewards-balance').innerHTML = ethers.utils.formatEther(rewardsBalance).toFixed(2);     
       }
 
       const connect = async () => {
