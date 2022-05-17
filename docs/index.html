@@ -116,13 +116,13 @@
       
       const updateBalances = async () => {
         const ethBalance = await provider.getBalance(userAddress);
-        document.getElementById('eth-balance').innerHTML = ethers.utils.formatEther(ethBalance).toFixed(5);
+        document.getElementById('eth-balance').innerHTML = Number(ethers.utils.formatEther(ethBalance)).toFixed(5);
         const usEthBalance = await usEth.balanceOf(userAddress);
-        document.getElementById('useth-balance').innerHTML = ethers.utils.formatEther(usEthBalance).toFixed(2);
+        document.getElementById('useth-balance').innerHTML = Number(ethers.utils.formatEther(usEthBalance)).toFixed(2);
         const stakedBalance = await usEth.staked(userAddress);
-        document.getElementById('staked-balance').innerHTML = ethers.utils.formatEther(stakedBalance).toFixed(2);     
+        document.getElementById('staked-balance').innerHTML = Number(ethers.utils.formatEther(stakedBalance)).toFixed(2);     
         const rewardsBalance = await usEth.rewardsOf(userAddress);
-        document.getElementById('rewards-balance').innerHTML = ethers.utils.formatEther(rewardsBalance).toFixed(2);     
+        document.getElementById('rewards-balance').innerHTML = Number(ethers.utils.formatEther(rewardsBalance)).toFixed(2);     
       }
 
       const connect = async () => {
