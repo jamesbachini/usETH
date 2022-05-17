@@ -73,19 +73,23 @@ async function main() {
   await aave.setToken(usdcAddress,ausdc.address,ethers.utils.parseEther('0.0005')); // 1 ETH = $2000
   ausdci = new ethers.Contract(ausdcAddress, mockERC20Abi, owner);
   await ausdci.transfer(aaveAddress,ethers.utils.parseEther('1000000000'));
+  
+    // Deploy usEthDao.sol
+    const usEthDaoContract = await ethers.getContractFactory('usEthDao');
+    usEthDao = await usEthDaoContract.deploy();
+    console.log(`    usEthDao deployed to: ${usEthDao.address}`);
 
-  // Deploy usEth.sol
-  const usEthContract = await ethers.getContractFactory('usEth');
-  usEth = await usEthContract.deploy(lidoAddress,aaveAddress,chainlinkAddress,uniswapAddress,curveAddress,usdcAddress,wethAddress,astethAddress,ausdcAddress);
-  await usEth.deployed();
-  console.log(`usEthAddress = '${usEth.address}';`);
+    // Deploy usEth.sol
+    const usEthContract = await ethers.getContractFactory('usEth');
+    usEth = await usEthContract.deploy(lidoAddress,aaveAddress,chainlinkAddress,uniswapAddress,curveAddress,usdcAddress,wethAddress,astethAddress,ausdcAddress,usEthDao.address);
+    await usEth.deployed();
+    console.log(`    usEth deployed to: ${usEth.address}`);
 
-  // Deploy usEthDao.sol
-  const usEthDaoContract = await ethers.getContractFactory('usEthDao');
-  usEthDao = await usEthDaoContract.deploy(usEth.address);
-  console.log(`usEthDaoAddress = '${usEthDao.address}';`);
-
-
+    // Move some funds around
+    await usEthDao.setAddress(usEth.address);
+    const usedBalance = await usEthDao.balanceOf(owner.address);
+    const stakers = usedBalance.div(10).mul(4);
+    await usEthDao.transfer(usEth.address, stakers);
 
 }
 
