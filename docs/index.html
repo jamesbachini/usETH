@@ -137,7 +137,7 @@
       const updateBalances = async () => {
         const ethBalance = await provider.getBalance(userAddress);
         if (!Number(ethBalance) > 0) document.getElementById('msg').innerHTML = `Get Rinkeby testnet Eth <a href="https://rinkebyfaucet.com/" target="_blank">here</a>`;
-        document.getElementById('eth-balance').innerHTML = `$${Number(ethers.utils.formatEther(ethBalance)).toFixed(5)} <span style="font-size: 0.8em;">ETH</span>`;
+        document.getElementById('eth-balance').innerHTML = `${Number(ethers.utils.formatEther(ethBalance)).toFixed(5)} <span style="font-size: 0.8em;">ETH</span>`;
         const usEthBalance = await usEth.balanceOf(userAddress);
         document.getElementById('useth-balance').innerHTML = `$${Number(ethers.utils.formatEther(usEthBalance)).toFixed(2)}`;
         const stakedBalance = await usEth.staked(userAddress);
