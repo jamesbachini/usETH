@@ -12,6 +12,7 @@
       button { width: 120px; height: 30px; border: 2px solid #CCC; border-radius: 3px; background: #000; color: #CCC; cursor: pointer; margin: 5px; }
       input[type=text] { width: 80px; height: 24px; }
       th { border-bottom: 1px solid #444; font-size: 1.1em; }
+      a { color: #CCC; }
     </style>
   </head>
   <body id="top">
@@ -63,12 +64,12 @@
         <div style="opacity: 0.5;"><img src="img/lego_bw.png" style="width: 300px; max-width: 80%;" alt="Lido, Aave, Uniswap, Chainlink, Curve" title="Lido, Aave, Uniswap, Chainlink, Curve" /></div>
       </div>
       <div style="text-align: center; padding: 3% 0 0 0">
-        <a href="https://github.com/jamesbachini/useth" target="_blank" style="color: #CCC;">github</a> | 
-        <a href="https://twitter.com/" target="_blank" style="color: #CCC;">@useth</a> | 
-        <a href="https://aragon.org/" target="_blank" style="color: #CCC;">dao</a> | 
+        <a href="https://github.com/jamesbachini/useth" target="_blank">github</a> | 
+        <a href="https://twitter.com/" target="_blank">@useth</a> | 
+        <a href="https://aragon.org/" target="_blank">dao</a> | 
         <a href="https://rinkeby.etherscan.io/address/0x7B089d4807CbdaA345851094cb5EfF8F5fb5670f" target="_blank" style="font-size: 0.8em; color: #CCC;">0x7B089d4807CbdaA345851094cb5EfF8F5fb5670f</a>
       </div>
-      <div style="text-align: center; padding: 1% 0 0 0"><h3><a href="#learn-more" style="color: #CCC;">learn more</a></h3></div>
+      <div style="text-align: center; padding: 1% 0 0 0"><h3><a href="#learn-more">learn more</a></h3></div>
       <div style="max-width: 800px; margin: auto;" id="learn-more">
         <div style="border: 1px solid #CCC; border-radius: 3px"><br><br><br>Video Coming Soon...</div>
         <p>
@@ -111,7 +112,7 @@
         <img src="img/explainer_bw.png" alt="usETH Explainer" style="width: 600px; max-width: 80%; opacity: 0.7;" />
       </div>
       <div style="text-align: center;">
-        <a href="#top" style="color: #CCC;">back to top</a>
+        <a href="#top">back to top</a>
       </div>
     </div>
     
@@ -136,7 +137,7 @@
       
       const updateBalances = async () => {
         const ethBalance = await provider.getBalance(userAddress);
-        if (!Number(ethBalance) > 0) document.getElementById('msg').innerHTML = `Get Rinkeby testnet Eth <a href="https://rinkebyfaucet.com/">here</a>`;
+        if (!Number(ethBalance) > 0) document.getElementById('msg').innerHTML = `Get Rinkeby testnet Eth <a href="https://rinkebyfaucet.com/" target="_blank">here</a>`;
         document.getElementById('eth-balance').innerHTML = `$${Number(ethers.utils.formatEther(ethBalance)).toFixed(5)} <span style="font-size: 0.8em;">ETH</span>`;
         const usEthBalance = await usEth.balanceOf(userAddress);
         document.getElementById('useth-balance').innerHTML = `$${Number(ethers.utils.formatEther(usEthBalance)).toFixed(2)}`;
@@ -145,7 +146,7 @@
         const rewardsBalance = await usEth.rewardsOf(userAddress);
         document.getElementById('rewards-balance').innerHTML = `$${Number(ethers.utils.formatEther(rewardsBalance)).toFixed(2)} <span style="font-size: 0.8em;">usETH</span>`;
         const usedBalance = await used.balanceOf(userAddress);
-        document.getElementById('used-balance').innerHTML = `${Number(ethers.utils.formatEther(usedBalance)).toFixed(5)} <span style="font-size: 0.8em;">USED</span>`;
+        document.getElementById('used-balance').innerHTML = `${Number(ethers.utils.formatEther(usedBalance)).toFixed(2)} <span style="font-size: 0.8em;">USED</span>`;
         document.getElementById('used-rewards-balance').innerHTML = `${Number(ethers.utils.formatEther(rewardsBalance)).toFixed(2)} <span style="font-size: 0.8em;">USED</span>`;
 
         
