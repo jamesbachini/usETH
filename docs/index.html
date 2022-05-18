@@ -11,7 +11,7 @@
       body { font-family: "Source Code Pro", sans-serif; background: #000000EE; color: #CCC; margin: 0px;}
       button { width: 120px; height: 30px; border: 2px solid #CCC; border-radius: 3px; background: #000; color: #CCC; cursor: pointer; margin: 5px; }
       input[type=text] { width: 80px; height: 24px; }
-      th { border-bottom: 1px solid #CCC; }
+      th { border-bottom: 1px solid #444; font-size: 1.1em; }
     </style>
   </head>
   <body id="top">
@@ -169,7 +169,7 @@
       document.getElementById('deposit').onclick = async () => {
         if (!usEth) await connect();
         const weiAmount = ethers.utils.parseEther(document.getElementById('deposit-amount').value);
-        if (!weiAmount) alert('Enter an amount');
+        if (!Number(weiAmount)) alert('Enter an amount');
         document.getElementById('deposit-amount').value = '';
         document.getElementById('deposit').innerHTML = 'SENDING TX...';
         const tx = await usEth.deposit({ value: weiAmount });
@@ -181,7 +181,7 @@
       document.getElementById('withdraw').onclick = async () => {
         if (!usEth) await connect();
         const weiAmount = ethers.utils.parseEther(document.getElementById('withdraw-amount').value);
-        if (!weiAmount) alert('Enter an amount');
+        if (!Number(weiAmount)) alert('Enter an amount');
         document.getElementById('withdraw-amount').value = '';
         document.getElementById('withdraw').innerHTML = 'SENDING TX...';
         const tx = await usEth.withdraw(weiAmount);
@@ -193,7 +193,7 @@
       document.getElementById('stake').onclick = async () => {
         if (!usEth) await connect();
         const weiAmount = ethers.utils.parseEther(document.getElementById('stake-amount').value);
-        if (!weiAmount) alert('Enter an amount');
+        if (!Number(weiAmount)) alert('Enter an amount');
         document.getElementById('stake-amount').value = '';
         document.getElementById('stake').innerHTML = 'SENDING TX...';
         const tx = await usEth.stake(weiAmount);
@@ -205,7 +205,7 @@
       document.getElementById('unstake').onclick = async () => {
         if (!usEth) await connect();
         const weiAmount = ethers.utils.parseEther(document.getElementById('unstake-amount').value);
-        if (!weiAmount) alert('Enter an amount');
+        if (!Number(weiAmount)) alert('Enter an amount');
         document.getElementById('unstake-amount').value = '';
         document.getElementById('unstake').innerHTML = 'SENDING TX...';
         const tx = await usEth.unstake(weiAmount);
