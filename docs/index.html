@@ -40,7 +40,7 @@
           </div>
         </div>
         <div style="max-width: 800px; margin: 20px auto; text-align: center;">
-          <table style="width: 100%;">
+          <table style="width: 100%; background: #000000AA;">
             <tr><th>Asset</th><th>Balance</th><th>Rewards</th><th>APR<span style="position: absolute; margin-top: -2px; font-size: 0.6em;">*</span></th></tr>
             <tr><td>ETH</td><td id="eth-balance"> </td><td></td> <td> </td></tr>
             <tr><td>usETH</td><td id="useth-balance"> </td><td> </td><td> </td></tr>
@@ -67,12 +67,12 @@
         <a href="https://github.com/jamesbachini/useth" target="_blank">github</a> | 
         <a href="https://twitter.com/" target="_blank">@useth</a> | 
         <a href="https://aragon.org/" target="_blank">dao</a> | 
-        <a href="https://rinkeby.etherscan.io/address/0x7B089d4807CbdaA345851094cb5EfF8F5fb5670f" target="_blank" style="font-size: 0.8em; color: #CCC;">0x7B089d4807CbdaA345851094cb5EfF8F5fb5670f</a>
+        <a href="https://rinkeby.etherscan.io/address/0x5f4CDed8aeA26a6C2668751fe997EdB985b8b742" target="_blank" style="font-size: 0.8em; color: #CCC;">0x5f4CDed8aeA26a6C2668751fe997EdB985b8b742</a>
       </div>
       <div style="text-align: center; padding: 1% 0 0 0"><h3><a href="#learn-more">learn more</a></h3></div>
       <div style="max-width: 800px; margin: auto;" id="learn-more">
         <div style="border: 1px solid #CCC; border-radius: 3px"><br><br><br>Video Coming Soon...</div>
-        <p>
+        <div style="width: 300px; margin: 60px auto;">
           <ul>
             <li>Fully collateralized</li>
             <li>Estimated 10%+ APR</li>
@@ -80,7 +80,7 @@
             <li>Permissionless</li>
             <li>Built on Ethereum</li>
           </ul>
-        </p>
+        </div>
         <h2 id="how-a-delta-neutral-trade-works">how a delta neutral trade works</h2>
         <p>A revenue generating asset is purchased and used as collateral to borrow the same amount of the same asset to short it. The borrowed asset is sold for USD meaning that if the asset price goes up or down it doesn’t matter because the amount owned is the same as the amount borrowed.</p>
         <p>Delta neutral trades have no directional exposure. The holder collects the revenues without being affected by underlying price movements.</p>
@@ -100,16 +100,15 @@
         <li>The stake function allows a user to commit usETH to the staking pool to earn rewards</li>
         <li>The unstake function releases the usETH and collects the rewards</li>
         </ul>
+        <div style="text-align: center; margin: 3% auto;">
+          <img src="img/explainer_bw.png" alt="usETH Explainer" style="width: 600px; max-width: 80%; opacity: 0.7;" />
+        </div>
         <p>With any stablecoin the total supply is not staked at any one time. However with usETH the underlying collateral is always staked meaning that if 50% of users stake their usETH the rewards will be 2x the ETH staking rewards before incentives.</p>
         <p>For many users this will be attractive in itself because it will provide a sustainable return on a position pegged to the USD, fully automated and permissionless in a Solidity smart contract.</p>
         <p>A usEth DAO governance token ($USED) will incentivise growth and create bribes to bootstrap a liquidity pool on Uniswap for USDC-usETH.</p>
         <p>Incoming staking rewards will be subject to a small percentage fee which will be directed to the holders of the USED token creating value for the protocol and its future governance.</p>
         <p style="font-size: 0.8em; font-style: italic">* All figures are estimated and subject to change</p> 
         <hr style="width: 50%; margin: 30px auto;">
-      </div>
-
-      <div style="text-align: center; margin: 3% auto;">
-        <img src="img/explainer_bw.png" alt="usETH Explainer" style="width: 600px; max-width: 80%; opacity: 0.7;" />
       </div>
       <div style="text-align: center;">
         <a href="#top">back to top</a>
@@ -132,8 +131,8 @@
         "function stake(uint256 amount)",
         "function unstake(uint256 amount)",
       ];
-      const usEthAddress = '0xEBB9255e86dA226Cf819C68D958Abbb431bEF684';
-      const usedAddress = '0xa359039EA942c7E6CdA54c618F64D1bd5155D331';
+      const usEthAddress = '0x5f4CDed8aeA26a6C2668751fe997EdB985b8b742';
+      const usedAddress = '0x6da5F4684Fea48F02c73A5DE92d7C313222a5F29';
       
       const updateBalances = async () => {
         const ethBalance = await provider.getBalance(userAddress);

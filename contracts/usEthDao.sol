@@ -9,6 +9,8 @@ import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
 contract usEthDao is ERC20, Ownable, ReentrancyGuard {
 
+    address private stakerAddress = 0x0000000000000000000000000000000000057A2E;
+
     address public usEthAddress;
     uint256 private supply = 1000000000 ether; // 1b
     mapping(address => uint256) public staked;
@@ -31,7 +33,7 @@ contract usEthDao is ERC20, Ownable, ReentrancyGuard {
 
   function stake(uint256 _amount) public nonReentrant {
     require(balanceOf(msg.sender) >= _amount, "Not enough USED balance");
-    _burn(msg.sender, _amount);
+    _transfer(msg.sender,stakerAddress,_amount);
     totalStaked += _amount;
     staked[msg.sender] += _amount;
     uint256 rewardsPool = IERC20(usEthAddress).balanceOf(address(this));
@@ -55,7 +57,7 @@ contract usEthDao is ERC20, Ownable, ReentrancyGuard {
     uint256 stakingRewards = sharesSold * pricePerShare / 1000000;
     totalStaked -= _amount;
     rewardsPool -= stakingRewards;
-    _mint(msg.sender, _amount);
+    _transfer(stakerAddress,msg.sender,_amount);
     IERC20(usEthAddress).transfer(msg.sender, stakingRewards);
   }
  

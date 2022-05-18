@@ -25,13 +25,19 @@ async function main() {
   usdcAddress = '0xeb8f08a975Ab53E34D8a0330E0D34de942C95926';
   wethAddress = '0xc778417E063141139Fce010982780140Aa0cD5Ab';
 
+  const networkData = await ethers.provider.getNetwork();
+  if (networkData.chainId === 31337) { // Move some funds on local testnet
+    const sponsor = new ethers.Wallet('0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80', ethers.provider);
+    await sponsor.sendTransaction({ to: owner.address, value: ethers.utils.parseEther('20') });
+  }
+
   const ownerBalance = await ethers.provider.getBalance(owner.address);
   console.log(`    Owner: ${owner.address} Balance: ${ethers.utils.formatEther(ownerBalance)} ETH`);
   await hre.run('compile');
 
   // Deploy Mock Curve
   const mockCurveContract = await ethers.getContractFactory('MockCurve');
-  mockCurve = await mockCurveContract.deploy();
+  mockCurve = await mockCurveContract.deploy(lidoAddress);
   await mockCurve.deployed();
   curveAddress = mockCurve.address;
   console.log(`curveAddress = '${mockCurve.address}';`);
