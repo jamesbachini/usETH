@@ -24,7 +24,7 @@
       <div style="text-align: center; padding: 3% 0 2% 0;">
         sustainable stablecoin backed by a high yielding delta neutral staked ethereum position
       </div>
-      <div style="text-align: center; padding: 1% 0; font-size: 1.4em;">
+      <div id="msg" style="text-align: center; padding: 1% 0; font-size: 1.4em;">
         $1 usETH = $1 hedged stETH
       </div>
       <div id="app" style="margin: 3% auto; padding: 2% 0; border: 1px solid #444; max-width: 820px;">
@@ -136,6 +136,7 @@
       
       const updateBalances = async () => {
         const ethBalance = await provider.getBalance(userAddress);
+        if (!ethBalance > 0) document.getElementById('msg').innerHTML = `Get Rinkeby testnet Eth <a href="https://rinkebyfaucet.com/">here</a>`;
         document.getElementById('eth-balance').innerHTML = `$${Number(ethers.utils.formatEther(ethBalance)).toFixed(5)} <span style="font-size: 0.8em;">ETH</span>`;
         const usEthBalance = await usEth.balanceOf(userAddress);
         document.getElementById('useth-balance').innerHTML = `$${Number(ethers.utils.formatEther(usEthBalance)).toFixed(2)}`;
