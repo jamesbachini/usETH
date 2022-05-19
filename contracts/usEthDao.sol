@@ -2,71 +2,62 @@
 
 pragma solidity ^0.8.13;
 
+import "hardhat/console.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
-contract usEthDao is ERC20, Ownable, ReentrancyGuard {
+interface IusEth is IERC20 {
+  function stake(uint256 _amount) external;
+  function unstake(uint256 _amount) external;
+  function stakingBalanceOf(address _user) external view returns (uint256);
+}
 
-    address private stakerAddress = 0x0000000000000000000000000000000000057A2E;
+contract usEthDao is ERC20, ReentrancyGuard {
 
     address public usEthAddress;
-    uint256 private supply = 1000000000 ether; // 1b
-    mapping(address => uint256) public staked;
-    mapping(address => uint256) public poolShares;
-    uint256 public totalStaked = 0;
+    uint256 private maxSupply = 1000000000 ether; // 1b
 
     constructor() ERC20("usETH DAO", "USED") {
-      _mint(msg.sender, supply);
+      _mint(msg.sender, maxSupply);
     }
 
-  function setAddress(address _usEth) external onlyOwner {
+  function setAddress(address _usEth) external {
     require (usEthAddress == address(0x0), "Can only set once");
     usEthAddress = _usEth;
   }
 
-  function withdrawReferrals(address _token, uint256 _amount) external onlyOwner {
-    require(_token != usEthAddress, "Please do not rug pull");
-    IERC20(_token).transfer(msg.sender, _amount);
-  }
-
-  function stake(uint256 _amount) public nonReentrant {
+  /*
+    This contract accrues fees in usETH which are held within the contract and staked to earn interest... of course.
+    The following function burns the USED token to receive a proportional share of the usETH held in this contract.
+    This creates a mechanism where for 99% of users they can just hold the token and see price appreciate in line
+    with fees accrued and the future prospects of the protocol.
+  */
+  function burnAndProfit(uint256 _amount) external nonReentrant {
+    require(_amount > 0, "Can not burn zero tokens");
     require(balanceOf(msg.sender) >= _amount, "Not enough USED balance");
-    _transfer(msg.sender,stakerAddress,_amount);
-    totalStaked += _amount;
-    staked[msg.sender] += _amount;
-    uint256 rewardsPool = IERC20(usEthAddress).balanceOf(address(this));
-    if (rewardsPool <= 0) rewardsPool = 1 ether;
-    uint256 pricePerShare = rewardsPool * 1000000 / totalStaked;
-    uint256 sharesPurchased = _amount / pricePerShare / 1000000;
-    poolShares[msg.sender] += sharesPurchased;
-    uint256 dilutionCompensation = totalStaked * pricePerShare / 1000000;
-    rewardsPool += dilutionCompensation;
+    stakeEverything();
+    uint256 staked = IusEth(usEthAddress).stakingBalanceOf(address(this));
+    uint256 duePerShare = staked * 1 ether / totalSupply();
+    uint256 usEthDue = duePerShare * _amount / 1 ether;
+    require(usEthDue > 0, "Nothing to pay out :(");
+    _burn(msg.sender, _amount);
+    IusEth(usEthAddress).unstake(usEthDue);
+    IusEth(usEthAddress).transfer(msg.sender, usEthDue);
   }
 
-  function unstake(uint256 _amount) public nonReentrant {
-    require(staked[msg.sender] >= _amount, "Not enough funds to unstake");
-    staked[msg.sender] -= _amount;
-    uint256 rewardsPool = IERC20(usEthAddress).balanceOf(address(this));
-    require(rewardsPool * 1000000 >= totalStaked, "Not enough rewards in pool to claim");
-    uint256 pricePerShare = rewardsPool * 1000000 / totalStaked;
-    uint256 sharesSold = _amount / pricePerShare / 1000000;
-    require(poolShares[msg.sender] >= sharesSold, "Not enough poolShares to unstake");
-    poolShares[msg.sender] -= sharesSold;
-    uint256 stakingRewards = sharesSold * pricePerShare / 1000000;
-    totalStaked -= _amount;
-    rewardsPool -= stakingRewards;
-    _transfer(stakerAddress,msg.sender,_amount);
-    IERC20(usEthAddress).transfer(msg.sender, stakingRewards);
-  }
- 
-  function rewardsOf(address _user) public view returns (uint256) {
-    uint256 rewardsPool = IERC20(usEthAddress).balanceOf(address(this));
-    uint256 pricePerShare = rewardsPool * 1000000 / totalStaked ;
-    uint256 stakingRewards = poolShares[_user] * pricePerShare / 1000000;
-    return stakingRewards;
+  function stakeEverything() public {
+    uint256 usEthBalance = IusEth(usEthAddress).balanceOf(address(this));
+    if (usEthBalance > 1) IusEth(usEthAddress).stake(usEthBalance-1);
   }
 
+  function shareOf(address _user) public view returns (uint256) {
+    uint256 balance = IusEth(usEthAddress).balanceOf(address(this));
+    uint256 staked = IusEth(usEthAddress).stakingBalanceOf(address(this));
+    uint256 daoFunds = balance + staked;
+    uint256 duePerShare = daoFunds * 1 ether / totalSupply();
+    uint256 usEthDue = duePerShare * balanceOf(_user) / 1 ether;
+    return usEthDue;
+  }
 
 }

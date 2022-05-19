@@ -4,7 +4,7 @@ const lidoAbi = require('./../abis/lido.json');
 const aaveAbi = require('./../abis/aave.json');
 const usdcAbi = require('./../abis/usdc.json');
 const wethAbi = require('./../abis/weth.json');
-    
+
 // Mainnet
 let lidoAddress = '0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84';
 let aaveAddress = '0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9';
@@ -25,11 +25,13 @@ describe('usEthDao', function () {
     if (networkData.chainId === 31337) { // Move some funds on local testnet
       const sponsor = new ethers.Wallet('0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80', ethers.provider);
       await sponsor.sendTransaction({ to: owner.address, value: ethers.utils.parseEther('2') });
+      await sponsor.sendTransaction({ to: user1.address, value: ethers.utils.parseEther('2') });
     }
     const ownerBalance = await ethers.provider.getBalance(owner.address);
-    console.log(`    Owner: ${owner.address} Balance: ${ethers.utils.formatEther(ownerBalance)} ETH`);
+    //console.log(`    Owner: ${owner.address} Balance: ${ethers.utils.formatEther(ownerBalance)} ETH`);
     await hre.run('compile');
     
+    /*
     // Add Rinkeby addresses
     lidoAddress = '0xF4242f9d78DB7218Ad72Ee3aE14469DBDE8731eD';
     chainlinkAddress = '0x8A753747A1Fa494EC906cE90E9f37563A8AF630e';
@@ -45,17 +47,18 @@ describe('usEthDao', function () {
     aaveAddress = '0x73703A2DBB8Cdd31774Fe52D402b969f7F11375e';
     astethAddress = '0x4EB4d5faDB60988283b9c437e127132A58C60fcd';
     ausdcAddress = '0x977cD9b9fd845F1a1dEAf4B2086217576755A99b';
+    */
 
     // Deploy usEthDao.sol
     const usEthDaoContract = await ethers.getContractFactory('usEthDao');
     usEthDao = await usEthDaoContract.deploy();
-    console.log(`    usEthDao deployed to: ${usEthDao.address}`);
+    //console.log(`    usEthDao deployed to: ${usEthDao.address}`);
 
     // Deploy usEth.sol
     const usEthContract = await ethers.getContractFactory('usEth');
     usEth = await usEthContract.deploy(lidoAddress,aaveAddress,chainlinkAddress,uniswapAddress,curveAddress,usdcAddress,wethAddress,astethAddress,ausdcAddress,usEthDao.address);
     await usEth.deployed();
-    console.log(`    usEth deployed to: ${usEth.address}`);
+    //console.log(`    usEth deployed to: ${usEth.address}`);
 
     // Move some funds around
     usEthDao.setAddress(usEth.address);
@@ -80,43 +83,38 @@ describe('usEthDao', function () {
   });
 
   it('Transfer some USED tokens', async function () {
-    const usedToSend = ethers.utils.parseEther('1000');
+    const usedToSend = ethers.utils.parseEther('1000000');
     await usEthDao.transfer(user1.address, usedToSend);
     const usedBalance = await usEthDao.balanceOf(user1.address);
     expect(usedBalance).to.be.eq(usedToSend);
   });
 
-  it('Stake some USED', async function () {
-    const usedToStake = ethers.utils.parseEther('500'); // half above
-    await usEthDao.connect(user1).stake(usedToStake);
-    const usedBalance = await usEthDao.balanceOf(user1.address);
-    expect(usedBalance).to.be.eq(usedToStake);
-    const usedStaked = await usEthDao.staked(user1.address);
-    expect(usedBalance).to.be.eq(usedToStake);
-  });
 
   it('Generate some staking fees', async function () {
     const ethAmount = ethers.utils.parseEther('0.2');
     const tx = await usEth.deposit({value: ethAmount});
     const usEthAmount = tx.value;
+    expect(usEthAmount).to.be.gt(0);
     await usEth.publicBurn(usEthAmount);
     await usEth.rebalance();
     await usEth.calculateRewards();
-    expect(usEthAmount).to.be.gt(0);
+    await usEthDao.stakeEverything();
   });
 
   it('Check user1 has some rewards', async function () {
-    const rewards = await usEthDao.rewardsOf(user1.address);
-    expect(rewards).to.be.gt(0);
+    const share = await usEthDao.shareOf(user1.address);
+    expect(share).to.be.gt(0);
   });
 
-  it('Unstake USED token', async function () {
-    const usedToStake = ethers.utils.parseEther('500'); // half above
-    await usEthDao.connect(user1).unstake(usedToStake);
-    const usedBalance = await usEthDao.balanceOf(user1.address);
-    expect(usedBalance).to.be.gt(usedToStake);
-    const usEthBalance = await usEth.balanceOf(user1.address);
-    expect(usEthBalance).to.be.gt(0);
+  it('Burn USED token to gain usETH', async function () {
+    const usedBalance1 = await usEthDao.balanceOf(user1.address);
+    const usEthBalance1 = await usEth.balanceOf(user1.address);
+    const usedToBurn = ethers.utils.parseEther('500000'); // half above
+    await usEthDao.connect(user1).burnAndProfit(usedToBurn);
+    const usedBalance2 = await usEthDao.balanceOf(user1.address);
+    const usEthBalance2 = await usEth.balanceOf(user1.address);
+    expect(usedBalance2).to.be.lt(usedBalance1);
+    expect(usEthBalance2).to.be.gt(usEthBalance1);
   });  
 
 });

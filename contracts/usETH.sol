@@ -1,7 +1,7 @@
 //SPDX-License-Identifier: Unlicense
 pragma solidity ^0.8.13;
 
-//import "hardhat/console.sol";
+import "hardhat/console.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import '@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol';
@@ -37,8 +37,7 @@ interface ICurve {
 contract usEth is ERC20, ReentrancyGuard {
   mapping(address => uint256) public staked;
   mapping(address => uint256) public poolShares;
-  uint256 public totalStaked = 0;
-  uint256 public rewardsPool = 1e18;
+  uint256 public totalShares;
   address private lidoAddress;
   address private aaveAddress;
   address private chainlinkAddress;
@@ -49,7 +48,7 @@ contract usEth is ERC20, ReentrancyGuard {
   address private astethAddress;
   address private ausdcAddress;
   address public usEthDaoAddress;
-  address private stakerAddress = 0x0000000000000000000000000000000000057A2E;
+  address private stakerAddress = 0x0000000000000000000000000000000000005aFE;
 
   constructor(address _lidoAddress, address _aaveAddress, address _chainlinkAddress, address _uniswapAddress, address _curveAddress, address _usdcAddress, address _wethAddress, address _astethAddress, address _ausdcAddress, address _usEthDaoAddress) ERC20("USD  Ether", "usETH") {
     lidoAddress = _lidoAddress;
@@ -62,7 +61,10 @@ contract usEth is ERC20, ReentrancyGuard {
     astethAddress = _astethAddress;
     ausdcAddress = _ausdcAddress;
     usEthDaoAddress = _usEthDaoAddress;
-    _mint(usEthDaoAddress, 10 ether); // Send $10 to Dao to avoid zero balance
+    _mint(stakerAddress, 1 ether);
+    totalShares = 1 ether;
+    poolShares[stakerAddress] = 1 ether;
+    staked[stakerAddress] = 1 ether;
   }
 
   function swap(address _tokenIn, address _tokenOut, uint256 _amountIn) internal returns (uint256) {
@@ -91,24 +93,24 @@ contract usEth is ERC20, ReentrancyGuard {
   6. Repeat so borrow ETH matches deposited stETH
   */
   function deposit() payable public nonReentrant returns (uint256) {
-    uint256 stEthCollateral = ILido(lidoAddress).submit{value: msg.value}(usEthDaoAddress);
-    ILido(lidoAddress).approve(aaveAddress, stEthCollateral);
-    IAave(aaveAddress).deposit(lidoAddress,stEthCollateral,address(this),0);
+    ILido(lidoAddress).submit{value: msg.value}(usEthDaoAddress);
+    uint256 lidoBalance = ILido(lidoAddress).balanceOf(address(this));
+    ILido(lidoAddress).approve(aaveAddress, lidoBalance-1); // leave 1 wei to save gas
+    IAave(aaveAddress).deposit(lidoAddress,lidoBalance-1,address(this),0);
     int256 ethPriceInt = EACAggregatorProxy(chainlinkAddress).latestAnswer();
     uint256 ethDollarPrice = uint256(ethPriceInt) / 10e7;
-    //uint256 usdEthValue = stEthCollateral * ethDollarPrice / 10e11;
-    uint256 borrowAmount = stEthCollateral * 7 / 10; // 70% collateral to loan - 75% liquidation
-    uint256 secondBorrow = stEthCollateral - borrowAmount; // leaves 30% remaining
+    uint256 borrowAmount = msg.value * 6 / 10; // 70% collateral to loan - 75% liquidation
+    uint256 secondBorrow = msg.value - borrowAmount; // leaves 30% remaining
     IAave(aaveAddress).borrow(wethAddress,borrowAmount,2,0,address(this));
     uint256 approveAllAtOnce = borrowAmount * 2;
     IWEth(wethAddress).approve(uniswapAddress,approveAllAtOnce);
     uint256 usdcBack = swap(wethAddress,usdcAddress,borrowAmount);
-    IERC20(usdcAddress).approve(aaveAddress,usdcBack);
-    IAave(aaveAddress).deposit(usdcAddress,usdcBack,address(this),0);
+    IERC20(usdcAddress).approve(aaveAddress,approveAllAtOnce);
+    IAave(aaveAddress).deposit(usdcAddress,usdcBack-1,address(this),0);
     IAave(aaveAddress).borrow(wethAddress,secondBorrow,2,0,address(this));
     uint256 usdcBackAgain = swap(wethAddress,usdcAddress,secondBorrow); // already approved
-    IERC20(usdcAddress).approve(aaveAddress,usdcBackAgain);
-    IAave(aaveAddress).deposit(usdcAddress,usdcBackAgain,address(this),0);
+    uint256 usdcBalance = ILido(usdcAddress).balanceOf(address(this));
+    IAave(aaveAddress).deposit(usdcAddress,usdcBalance-1,address(this),0);
     uint256 amountToMint = msg.value * ethDollarPrice;
     uint256 usdcTotal = usdcBack + usdcBackAgain;
     uint usdcNormalised = usdcTotal * 10e11;
@@ -206,72 +208,50 @@ contract usEth is ERC20, ReentrancyGuard {
     }
   }
 
-  function depositUSDC(uint256 _amount) public nonReentrant {
-    uint256 startBalance = IERC20(usdcAddress).balanceOf(address(this));
-    IERC20(usdcAddress).transferFrom(msg.sender,address(this),_amount);
-    uint256 endBalance = IERC20(usdcAddress).balanceOf(address(this));
-    require (endBalance >= startBalance + _amount, "USDC not transferred, check balance and approval");
-    IERC20(usdcAddress).approve(aaveAddress,_amount);
-    IAave(aaveAddress).deposit(usdcAddress,_amount,address(this),0);
-    rebalance();
-    _mint(msg.sender, _amount);
-  }
-
-  function withdrawUSDC(uint256 _amount) public nonReentrant {
-    uint256 supply = totalSupply();
-    uint256 maxWithdrawPerTransaction = supply / 4;
-    require(_amount < maxWithdrawPerTransaction, "Exceeds maximum withdrawal per transaction");
-    require(balanceOf(msg.sender) >= _amount, "Not enough usETH balance");
-    _burn(msg.sender, _amount);
-    IAave(aaveAddress).withdraw(usdcAddress,_amount,address(this));
-    rebalance();
-    IERC20(usdcAddress).transfer(msg.sender, _amount);
-  }
-
-  /*
-    $2 in pool / $10 staked = $0.2/share
-    someone adds $2
-    x / $12 = $0.2/share
-    12 * 0.2 = $2.4 in pool
-  */
   function stake(uint256 _amount) public nonReentrant {
     require(balanceOf(msg.sender) >= _amount, "Not enough usETH balance");
+    uint256 pricePerShare = balanceOf(stakerAddress) * 1 ether / totalShares; // 1 ether used to avoid integer underflow
+    require(pricePerShare > 0, "pricePerShare too low");
+    uint256 sharesToPurchase = _amount * 1 ether / pricePerShare;
+    totalShares += sharesToPurchase;
     _transfer(msg.sender,stakerAddress,_amount);
-    totalStaked += _amount;
+    poolShares[msg.sender] += sharesToPurchase;
     staked[msg.sender] += _amount;
-    uint256 pricePerShare = rewardsPool * 1000000 / totalStaked; // overflow?
-    uint256 sharesPurchased = _amount / pricePerShare / 1000000;
-    poolShares[msg.sender] += sharesPurchased;
-    uint256 dilutionCompensation = totalStaked * pricePerShare / 1000000;
-    rewardsPool += dilutionCompensation;
   }
 
   function unstake(uint256 _amount) public nonReentrant {
-    require(staked[msg.sender] >= _amount, "Not enough funds to unstake");
-    staked[msg.sender] -= _amount;
-    uint256 pricePerShare = rewardsPool * 1000000 / totalStaked;
-    uint256 sharesSold = _amount / pricePerShare / 1000000;
-    require(poolShares[msg.sender] >= sharesSold, "Not enough poolShares to unstake");
-    poolShares[msg.sender] -= sharesSold;
-    uint256 stakingRewards = sharesSold * pricePerShare / 1000000;
-    totalStaked -= _amount;
-    rewardsPool -= stakingRewards;
-    uint256 totalToPayOut = stakingRewards + _amount;
-    uint256 stakersBalance = balanceOf(stakerAddress);
-    if (stakersBalance < totalToPayOut) {
-      _mint(stakerAddress,totalToPayOut - stakersBalance);
-    } 
-    _transfer(stakerAddress,msg.sender,totalToPayOut);
-     uint256 used = IERC20(usEthDaoAddress).balanceOf(address(this));
-    if (used >= stakingRewards) {
-      IERC20(usEthDaoAddress).transfer(msg.sender,stakingRewards); // more or less?
+    require(_amount > 0, "Amount to unstake must be greater than zero");
+    uint256 pricePerShare = balanceOf(stakerAddress) * 1 ether / totalShares;
+    require(pricePerShare > 0, "pricePerShare too low");
+    uint256 sharesToSell = _amount * 1 ether / pricePerShare;
+    require(poolShares[msg.sender] >= sharesToSell, "Not enough poolShares to unstake");
+    uint256 stakingBalance = stakingBalanceOf(msg.sender);
+    if (stakingBalance > staked[msg.sender]) {
+      uint256 capitalGains = stakingBalance - staked[msg.sender];
+      uint256 percentageWithdrawal = 1 ether * _amount / staked[msg.sender];
+      uint256 adjustedGains = capitalGains / percentageWithdrawal / 1 ether;
+      distributeRewards(adjustedGains); // ditribute governance token on usd gains
     }
+    totalShares -= sharesToSell;
+    poolShares[msg.sender] -= sharesToSell;
+    staked[msg.sender] -= _amount;
+    _transfer(stakerAddress,msg.sender,_amount);
   }
 
-  function rewardsOf(address _user) public view returns (uint256) {
-    uint256 pricePerShare = rewardsPool * 1000000 / totalStaked ;
-    uint256 stakingRewards = poolShares[_user] * pricePerShare / 1000000;
-    return stakingRewards;
+
+  function distributeRewards(uint256 _commission) internal {
+    uint256 govTokenSupply = IERC20(usEthDaoAddress).balanceOf(address(this));
+    if (govTokenSupply < 1 ether) return;
+    if (msg.sender == usEthDaoAddress) return;
+    uint256 diminishingSupplyFactor =  govTokenSupply * 100 / 400000000 ether; // assumes 400m used allocation for stakers
+    uint256 govTokenDistro = _commission * diminishingSupplyFactor ;
+    if (govTokenDistro > 0) IERC20(usEthDaoAddress).transfer(msg.sender,govTokenDistro);
+  }
+
+ function stakingBalanceOf(address _user) public view returns (uint256) {
+    uint256 pricePerShare = balanceOf(stakerAddress) * 1 ether / totalShares;
+    uint256 stakingBalance = poolShares[_user] *  pricePerShare / 1 ether;
+    return stakingBalance;
   }
 
   function calculateRewards() public nonReentrant {
@@ -284,8 +264,8 @@ contract usEth is ERC20, ReentrancyGuard {
       uint256 profit = usdTVL - supply;
       uint256 fee = profit / 10;
       uint256 remaining = profit - fee;
-      rewardsPool += remaining;
-      _mint(usEthDaoAddress, fee);
+       _mint(usEthDaoAddress, fee);
+      _mint(stakerAddress, remaining);
     }
   }
 
@@ -303,6 +283,6 @@ contract usEth is ERC20, ReentrancyGuard {
   }
 
 
-  fallback () external payable {}
-
+  fallback() external payable {}
+  receive() external payable {}
 }

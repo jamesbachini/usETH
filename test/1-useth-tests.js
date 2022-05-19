@@ -27,9 +27,10 @@ describe('usEth', function () {
       await sponsor.sendTransaction({ to: owner.address, value: ethers.utils.parseEther('2') });
     }
     const ownerBalance = await ethers.provider.getBalance(owner.address);
-    console.log(`    Owner: ${owner.address} Balance: ${ethers.utils.formatEther(ownerBalance)} ETH`);
+    //console.log(`    Owner: ${owner.address} Balance: ${ethers.utils.formatEther(ownerBalance)} ETH`);
     await hre.run('compile');
     
+    /*
     // Add Rinkeby addresses
     lidoAddress = '0xF4242f9d78DB7218Ad72Ee3aE14469DBDE8731eD';
     chainlinkAddress = '0x8A753747A1Fa494EC906cE90E9f37563A8AF630e';
@@ -45,17 +46,18 @@ describe('usEth', function () {
     aaveAddress = '0x73703A2DBB8Cdd31774Fe52D402b969f7F11375e';
     astethAddress = '0x4EB4d5faDB60988283b9c437e127132A58C60fcd';
     ausdcAddress = '0x977cD9b9fd845F1a1dEAf4B2086217576755A99b';
+    */
 
     // Deploy usEthDao.sol
     const usEthDaoContract = await ethers.getContractFactory('usEthDao');
     usEthDao = await usEthDaoContract.deploy();
-    console.log(`    usEthDao deployed to: ${usEthDao.address}`);
+    //console.log(`    usEthDao deployed to: ${usEthDao.address}`);
 
     // Deploy usEth.sol
     const usEthContract = await ethers.getContractFactory('usEth');
     usEth = await usEthContract.deploy(lidoAddress,aaveAddress,chainlinkAddress,uniswapAddress,curveAddress,usdcAddress,wethAddress,astethAddress,ausdcAddress,usEthDao.address);
     await usEth.deployed();
-    console.log(`    usEth deployed to: ${usEth.address}`);
+    //console.log(`    usEth deployed to: ${usEth.address}`);
 
     // Move some funds around
     usEthDao.setAddress(usEth.address);
@@ -93,13 +95,13 @@ describe('usEth', function () {
     expect(usEthAmount).to.be.gt(0);
   });
 
-  it('Check zero balances for usEth contract', async function () {
+  it('Check zeroish balances for usEth contract', async function () {
       const usdcBalance = await usdc.balanceOf(usEth.address);
-      expect(usdcBalance).to.be.eq(0);
+      expect(usdcBalance).to.be.lt(10);
       const lidoBalance = await lido.balanceOf(usEth.address);
-      expect(lidoBalance).to.be.eq(0);
+      expect(lidoBalance).to.be.lt(10);
       const ethBalance = await ethers.provider.getBalance(usEth.address);
-      expect(ethBalance).to.be.eq(0);
+      expect(ethBalance).to.be.lt(10);
   });
 
   it('Stake usEth', async function () {
@@ -118,15 +120,15 @@ describe('usEth', function () {
 
   it('Test rebalance on usEth', async function () {
     await usEth.rebalance();
-          const lidoBalance = await lido.balanceOf(usEth.address);
-      expect(lidoBalance).to.be.eq(0);
+    const lidoBalance = await lido.balanceOf(usEth.address);
+     expect(lidoBalance).to.be.lt(10);
   });
   
   it('Unstake usEth', async function () {
     const usdAmount = ethers.utils.parseEther('1');
     const usEthBalance1 = await usEth.balanceOf(owner.address);
     await usEth.unstake(usdAmount);
-     const usEthBalance2 = await usEth.balanceOf(owner.address);
+    const usEthBalance2 = await usEth.balanceOf(owner.address);
     expect(usEthBalance2).to.be.gt(usEthBalance1);
   });
 
@@ -138,30 +140,14 @@ describe('usEth', function () {
     expect(usEthBalance2).to.be.lt(usEthBalance1);
   });
 
-  it('Stake some USED tokens on usEthDao', async function () {
-    const usdAmount = ethers.utils.parseEther('100000');
-    const usEthDaoBalance1 = await usEthDao.balanceOf(owner.address);
-    await usEthDao.stake(usdAmount);
-    const usEthDaoBalance2 = await usEthDao.balanceOf(owner.address);
-    expect(usEthDaoBalance2).to.be.lt(usEthDaoBalance1);
-  });
-
-  it('Unstake some USED tokens on usEthDao', async function () {
-    const usdAmount = ethers.utils.parseEther('100000');
-    const usEthDaoBalance1 = await usEthDao.balanceOf(owner.address);
-    await usEthDao.unstake(usdAmount);
-    const usEthDaoBalance2 = await usEthDao.balanceOf(owner.address);
-    expect(usEthDaoBalance2).to.be.gt(usEthDaoBalance1);
-  });
-
-  it('Check TVL, totalSupply & totalStaked', async function () {
+  it('Check TVL, totalSupply & totalShares', async function () {
     const tvl = await usEth.tvl();
     const totalSupply = await usEth.totalSupply();
-    const totalStaked = await usEth.totalStaked();
-    //console.log(`    tvl: ${tvl} totalSupply: ${totalSupply} totalStaked: ${totalStaked}`);
+    const totalShares = await usEth.totalShares();
+    //console.log(`    tvl: ${tvl} totalSupply: ${totalSupply} totalShares: ${totalShares}`);
     expect(tvl).to.be.gt(0);
     expect(totalSupply).to.be.gt(0);
-    expect(totalStaked).to.be.gt(0);
+    expect(totalShares).to.be.gt(0);
   });
 
   it('Make a donation, simulate staking fees', async function () {
@@ -174,28 +160,28 @@ describe('usEth', function () {
     expect(usEthAmount).to.be.gt(0);
   });
 
-  it('Check TVL, totalSupply & totalStaked again', async function () {
+  it('Check TVL, totalSupply & totalShares again', async function () {
     const tvl = await usEth.tvl();
     const totalSupply = await usEth.totalSupply();
-    const totalStaked = await usEth.totalStaked();
-    //console.log(`    tvl: ${tvl} totalSupply: ${totalSupply} totalStaked: ${totalStaked}`);
+    const totalShares = await usEth.totalShares();
+    //console.log(`    tvl: ${tvl} totalSupply: ${totalSupply} totalShares: ${totalShares}`);
     expect(tvl).to.be.gt(0);
     expect(totalSupply).to.be.gt(0);
-    expect(totalStaked).to.be.gt(0);
+    expect(totalShares).to.be.gt(0);
   });
 
   it('Check owner rewards', async function () {
-    const rewards = await usEth.rewardsOf(owner.address);
+    const rewards = await usEth.stakingBalanceOf(owner.address);
     //console.log(`    rewards: ${rewards}`);
     expect(rewards).to.be.gt(0);
   }); 
 
-  it('Check zero balances again for usEth contract', async function () {
-    const usdcBalance = await usdc.balanceOf(usEth.address);
-    expect(usdcBalance).to.be.eq(0);
-    const lidoBalance = await lido.balanceOf(usEth.address);
-    expect(lidoBalance).to.be.eq(0);
-    const ethBalance = await ethers.provider.getBalance(usEth.address);
-    expect(ethBalance).to.be.eq(0);
+  it('Check again for zeroish balances for usEth contract', async function () {
+      const usdcBalance = await usdc.balanceOf(usEth.address);
+      expect(usdcBalance).to.be.lt(10);
+      const lidoBalance = await lido.balanceOf(usEth.address);
+      expect(lidoBalance).to.be.lt(10);
+      const ethBalance = await ethers.provider.getBalance(usEth.address);
+      expect(ethBalance).to.be.lt(10);
   });
 });

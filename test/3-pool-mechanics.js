@@ -1,10 +1,8 @@
 const { expect } = require('chai');
 const { ethers } = require('hardhat');
 
-describe.only('poolMechanics', function () {
-  let totalStaked = 0;
-  let rewardsPool = 1;
-  let staked = {};
+describe('poolMechanics', function () {
+  let totalShares = 0;
   let poolShares = {};
   let balance = {};
   let stakerAddress = 'staker';
@@ -22,50 +20,92 @@ describe.only('poolMechanics', function () {
 
   const stake = (_from, _amount) => {
     if (!balance[_from] >= _amount) throw "Not enough usETH balance";
-    _transfer(_from,stakerAddress,_amount);
-    totalStaked += _amount;
-    if (!staked[_from]) staked[_from] = 0;
-    staked[_from] += _amount;
-    let pricePerShare = rewardsPool * 1000000 / totalStaked; // overflow?
-    let sharesPurchased = _amount / pricePerShare / 1000000;
+    let pricePerShare = balance[stakerAddress]  * 100 / totalShares;
+    sharesToPurchase = _amount * 100 / pricePerShare;
     if (!poolShares[_from]) poolShares[_from] = 0;
-    poolShares[_from] += sharesPurchased;
-    let dilutionCompensation = totalStaked * pricePerShare / 1000000;
-    rewardsPool += dilutionCompensation;
+    totalShares += sharesToPurchase;
+    _transfer(_from,stakerAddress,_amount);
+    poolShares[_from] += sharesToPurchase;
   }
 
   const unstake = (_from, _amount) => {
-    if (!staked[_from] >= _amount) throw "Not enough funds to unstake";
-    staked[_from] -= _amount;
-    let pricePerShare = rewardsPool * 1000000 / totalStaked;
-    let sharesSold = _amount / pricePerShare / 1000000;
-    if (!poolShares[_from] >= sharesSold) throw "Not enough poolShares to unstake";
-    poolShares[_from] -= sharesSold;
-    let stakingRewards = sharesSold * pricePerShare / 1000000;
-    totalStaked -= _amount;
-    rewardsPool -= stakingRewards;
-    let totalToPayOut = stakingRewards + _amount;
-    let stakersBalance = balanceOf(stakerAddress);
-    if (stakersBalance < totalToPayOut) throw "stakersBalance too low";
-    _transfer(stakerAddress,_from,totalToPayOut);
+    let pricePerShare = balance[stakerAddress] * 100 / totalShares;
+    let sharesToSell = _amount  * 100 / pricePerShare;
+    if (!poolShares[_from] >= sharesToSell) throw "Not enough poolShares to unstake";
+    totalShares -= sharesToSell;
+    poolShares[_from] -= sharesToSell;
+    if (balance[stakerAddress] < _amount) throw "stakersBalance too low";
+    _transfer(stakerAddress,_from,_amount);
+  }
+
+  const stakingBalanceOf = (_user) => {
+    let pricePerShare = balance[stakerAddress] * 100 / totalShares;
+    let stakingBalance = poolShares[_user]  * pricePerShare / 100;
+    return stakingBalance;
+  }
+
+  const reset = () => {
+    totalShares = 1;
+    balance = {};
+    poolShares = {};
+    balance['alice'] = 100;
+    balance['bob'] = 100;
+    balance['carlos'] = 100;
+    balance[stakerAddress] = 1;
+    poolShares[stakerAddress] = 1;
   }
 
   before(async () => {
-    // reset completely before each test
-    totalStaked = 0;
-    rewardsPool = 1;
-    staked = {};
-    poolShares = {};
-    balance = {};
-    balance['alice'] = 100;
-    balance['bob'] = 100;
+    reset();
   });
-
 
   it('Try staking and unstaking', async function () {
     stake('alice',50);
     unstake('alice',50);
-    expect(usedBalance2).to.be.eq(0);
+    expect(balanceOf('alice')).to.be.eq(100);
   });
 
+  it('Add in some rewards', async function () {
+    stake('alice',50);
+    balance[stakerAddress] += 10;
+    expect(stakingBalanceOf('alice')).to.be.gt(59.8);
+    unstake('alice',stakingBalanceOf('alice'));
+    expect(balanceOf('alice')).to.be.gt(109.8);
+    expect(poolShares['alice']).to.be.lt(1);
+  });
+
+  it('Bob wants to get involved', async function () {
+    reset();
+    stake('alice',50);
+    balance[stakerAddress] += 10;
+    stake('bob',50);
+    balance[stakerAddress] += 10;
+    const debt = stakingBalanceOf('alice') + stakingBalanceOf('bob');
+    expect(debt).to.be.gt(119);
+    expect(debt).to.be.lt(121);
+    expect(stakingBalanceOf('alice')).to.be.gt(65);
+    expect(stakingBalanceOf('bob')).to.be.gt(54.5); // slight slippage effect
+    unstake('alice',stakingBalanceOf('alice'));
+    unstake('bob',stakingBalanceOf('bob'));
+    expect(balanceOf('alice')).to.be.gt(115);
+    expect(balanceOf('bob')).to.be.gt(104.5);
+  });
+
+  it('Try a bigger pool with initial liquidity provision', async function () {
+    reset();
+    stake('alice',500000);
+    balance[stakerAddress] += 10;
+    stake('bob',50);
+    balance[stakerAddress] += 10;
+    const debt = stakingBalanceOf('alice') + stakingBalanceOf('bob');
+    expect(debt).to.be.gt(500069);
+    expect(stakingBalanceOf('alice')).to.be.gt(500019);
+    expect(stakingBalanceOf('bob')).to.be.gt(50); // slight slippage effect
+    unstake('alice',stakingBalanceOf('alice'));
+    unstake('bob',stakingBalanceOf('bob'));
+  });
+
+  it('Final balances', async function () {
+    //console.log(balance,poolShares);
+  });
 });
