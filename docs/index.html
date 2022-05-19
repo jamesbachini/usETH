@@ -92,7 +92,7 @@
         <p>After the merge mining rewards will be redirected to stakers. stETH is expected to earn around 10% APR in staking rewards while borrowing costs are less than 1% on our overcollateralized position.</p>
         <p>The USDC that we gain from selling the borrowed ETH is also deposited to Aave as additional collateral.</p>
         <hr style="width: 50%; margin: 30px auto;">
-        <h2 id="can-it-be-done-in-a-smart-contract-">can it be done in a smart contract?</h2>
+        <h2 id="can-it-be-done-in-a-smart-contract">can it be done in a smart contract?</h2>
         <p>usETH is an ERC20 token with some additional functionality.</p>
         <ul>
         <li>The deposit function allows a user to send ETH and mint usETH in return</li>
@@ -105,14 +105,20 @@
         </div>
         <p>With any stablecoin the total supply is not staked at any one time. However with usETH the underlying collateral is always staked meaning that if 50% of users stake their usETH the rewards will be 2x the ETH staking rewards before incentives.</p>
         <p>For many users this will be attractive in itself because it will provide a sustainable return on a position pegged to the USD, fully automated and permissionless in a Solidity smart contract.</p>
-        <p>A usEth DAO governance token ($USED) will incentivise growth and create bribes to bootstrap a liquidity pool on Uniswap for USDC-usETH.</p>
-        <p>Incoming staking rewards will be subject to a small percentage fee which will be directed to the holders of the USED token creating value for the protocol and its future governance.</p>
+       <hr style="width: 50%; margin: 30px auto;">
+        <h2 id="how-does-it-make-money">how does it make money?</h2>
+        <p>A usEth DAO governance token ($USED) will be deployed and fairly distributed to liquidity providers and partners in the space.</p>
+        <p>Incoming staking rewards will be subject to a small percentage fee which will be directed over time to the holders of the USED token creating value for the protocol and its future governance.</p>
+        <p>Incentives will be put in place for liquidity providers to incentivise growth and establish a pool on Uniswap for USDC-usETH.</p>
+        <p>The USED token itself has an interesting mechanism for accruing value. usETH fees building up in the DAO treasury can only be accessed by burning USED tokens for a proportional share. Incoming fees will build token value alongside the deflationary burn mechanism.</p>
+        <p>Both the usETH token and USED token are completely permissionless.</p>
         <p style="font-size: 0.8em; font-style: italic">* All figures are estimated and subject to change</p> 
         <hr style="width: 50%; margin: 30px auto;">
       </div>
       <div style="text-align: center;">
         <a href="#top">back to top</a>
       </div>
+      <div style="height: 200px;"></div>
     </div>
     
     <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" type="application/javascript"></script>
