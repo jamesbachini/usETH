@@ -13,7 +13,9 @@
       input[type=text] { width: 80px; height: 24px; }
       th { border-bottom: 1px solid #444; font-size: 1.1em; }
       a { color: #CCC; }
-      .mobile-hidden { display: none; }
+      @media screen and (max-width: 720px) {
+        .mobile-hidden { display: none; }
+      }
     </style>
   </head>
   <body id="top">
