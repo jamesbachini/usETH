@@ -13,15 +13,16 @@
       input[type=text] { width: 80px; height: 24px; }
       th { border-bottom: 1px solid #444; font-size: 1.1em; }
       a { color: #CCC; }
+      .mobile-hidden { display: none; }
     </style>
   </head>
   <body id="top">
     <div style="max-width: 95%; margin: 0 auto;">
       <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; width: 100%; padding-top: 1%">
         <div style="flex: 1 1 auto; text-align: center; font-size: 1.4em;">usETH</div>
-        <div style="flex: 1 1 auto; text-align: center;">TVL: $0m</div>
+        <div class="mobile-hidden" style="flex: 1 1 auto; text-align: center;">TVL: $0m</div>
         <div style="flex: 1 1 auto; text-align: center;">
-          <span style="font-size:0.6em;" class="wallet-address">Rinkeby</span>
+          <span class="mobile-hidden" style="font-size:0.6em;" class="wallet-address">Rinkeby</span>
           <button id="connect">CONNECT</button>
           <button id="wallet-connect" style="width: 40px"><img src="img/wallet-connect.svg" style="height: 12px;" alt="Connect via Wallet Connect"></button>
           </div>
