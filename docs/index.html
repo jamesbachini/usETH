@@ -158,7 +158,7 @@
         const stakedBalance = await usEth.staked(userAddress);
         document.getElementById('staked-balance').innerHTML = `$${Number(ethers.utils.formatEther(stakedBalance)).toFixed(2)}`;
         const currentStakingBalance = await usEth.stakingBalanceOf(userAddress);
-        const rewards = currentStakingBalance - stakedBalance;
+        const rewardsBalance = currentStakingBalance - stakedBalance;
         document.getElementById('rewards-balance').innerHTML = `$${Number(ethers.utils.formatEther(rewardsBalance)).toFixed(2)} <span style="font-size: 0.8em;">usETH</span>`;
         const usedBalance = await used.balanceOf(userAddress);
         document.getElementById('used-balance').innerHTML = `${Number(ethers.utils.formatEther(usedBalance)).toFixed(2)} <span style="font-size: 0.8em;">USED</span>`;
