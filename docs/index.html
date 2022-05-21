@@ -139,15 +139,15 @@
       let used;
       const usEthAbi = [
         "function balanceOf(address) view returns (uint256)",
-        "function rewardsOf(address) view returns (uint256)",
+        "function stakingBalanceOf(address) view returns (uint256)",
         "function staked(address) view returns (uint256)",
-        "function deposit() payable",
+        "function deposit() payable returns(uint256)",
         "function withdraw(uint256 amount)",
         "function stake(uint256 amount)",
         "function unstake(uint256 amount)",
       ];
-      const usEthAddress = '0x5f4CDed8aeA26a6C2668751fe997EdB985b8b742';
-      const usedAddress = '0x6da5F4684Fea48F02c73A5DE92d7C313222a5F29';
+      const usEthAddress = '0x6EC08c970e989859fa8661646b722222283556E6';
+      const usedAddress = '0xbeCbC2bA2afB8c69D00DaA9d860366bb539F0919';
       
       const updateBalances = async () => {
         const ethBalance = await provider.getBalance(userAddress);
@@ -157,7 +157,8 @@
         document.getElementById('useth-balance').innerHTML = `$${Number(ethers.utils.formatEther(usEthBalance)).toFixed(2)}`;
         const stakedBalance = await usEth.staked(userAddress);
         document.getElementById('staked-balance').innerHTML = `$${Number(ethers.utils.formatEther(stakedBalance)).toFixed(2)}`;
-        const rewardsBalance = await usEth.rewardsOf(userAddress);
+        const currentStakingBalance = await usEth.stakingBalanceOf(userAddress);
+        const rewards = currentStakingBalance - stakedBalance;
         document.getElementById('rewards-balance').innerHTML = `$${Number(ethers.utils.formatEther(rewardsBalance)).toFixed(2)} <span style="font-size: 0.8em;">usETH</span>`;
         const usedBalance = await used.balanceOf(userAddress);
         document.getElementById('used-balance').innerHTML = `${Number(ethers.utils.formatEther(usedBalance)).toFixed(2)} <span style="font-size: 0.8em;">USED</span>`;
