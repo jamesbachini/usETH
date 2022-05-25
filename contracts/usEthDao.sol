@@ -18,6 +18,13 @@ contract usEthDao is ERC20, ReentrancyGuard {
     address public usEthAddress;
     uint256 private maxSupply = 1000000000 ether; // 1b
 
+  /*
+  I think potentially if we were going to launch the governance token first
+  then there's merit to just passing usEthAddress to the functions. This would
+  remove the need for a permissioned setAddress and would make room for
+  future upgrades to usETHv2.sol
+  */
+
     constructor() ERC20("usETH DAO", "USED") {
       _mint(msg.sender, maxSupply);
     }
