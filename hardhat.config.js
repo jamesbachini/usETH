@@ -24,7 +24,7 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
 module.exports = {
   solidity: {
     compilers: [
-      { version: "0.8.13" },
+      { version: "0.8.14" },
       { version: "0.7.6" },
       { version: "0.6.6" }
     ]
@@ -43,7 +43,7 @@ module.exports = {
       url: `http://127.0.0.1:8545`,
       accounts: [process.env.PRIVATE_KEY,process.env.USER1_PRIVATE_KEY,],
     },
-    hardhat: {
+    fork: {
       forking: {
         url: `https://eth-rinkeby.alchemyapi.io/v2/${process.env.ALCHEMY_API_KEY}`,
         accounts: [process.env.PRIVATE_KEY,process.env.USER1_PRIVATE_KEY,],
